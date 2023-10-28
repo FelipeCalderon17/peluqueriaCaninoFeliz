@@ -37,35 +37,29 @@ error_reporting(0);
                     <div class="card shadow-2-strong" style="border-radius: 1rem; opacity: 90%;">
                         <div class="card-body p-5 text-center">
 
-                            <h3 class="mb-5">Iniciar Sesión</h3>
+                            <h3 class="mb-5">Registro</h3>
 
-                            <form action="../controlador/login.php" method="post">
-                                <div class="form-outline mb-4">
-                                    <input type="email" id="correo_usuario" name="correo_usuario" class="form-control form-control-lg" />
-                                    <label class="form-label" for="typeEmailX-2">Correo Electronico</label>
+                            <form action="../controlador/register.php" method="post">
+                                <div class="form-outline mb-3">
+                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp">
+                                    <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                </div>
+                                <div class="form-outline mb-3">
+                                    <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp">
+                                    <label for="exampleInputEmail1" class="form-label">Correo</label>
+                                </div>
+                                <div class="form-outline mb-3">
+                                    <input type="password" class="form-control" id="pass_usuario" name="pass_usuario">
+                                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                                 </div>
 
-                                <div class="form-outline mb-4">
-                                    <input type="password" id="pass_usuario" name="pass_usuario" class="form-control form-control-lg" />
-                                    <label class="form-label" for="typePasswordX-2">Contraseña</label>
-                                </div>
-                                <?php
-                                if ($_SESSION["errorLogin"] == 1) {
-                                ?>
-                                    <div class="form-outline mb-4">
-                                        <h4 class="text-danger">Contraseña o Correo incorrecto</h4>
-                                    </div>
-                                <?php
-                                }  ?>
 
 
-
-
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Iniciar</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Enviar</button>
 
                             </form>
                             <div class="mb-3 mt-3">
-                                <a href="./register.php" class="nav-link">No tengo Cuenta</a>
+                                <a href="./index.php" class="nav-link">Ya tengo Cuenta</a>
                             </div>
 
                         </div>

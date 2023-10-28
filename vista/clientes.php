@@ -127,7 +127,7 @@
                                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                                 // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                                                $stmt = $pdo->prepare("SELECT * FROM usuario");
+                                                $stmt = $pdo->prepare("SELECT * FROM usuario where rol_usuario = 'cliente'");
 
                                                 // Paso 4: Ejecutar la consulta preparada.
                                                 $stmt->execute();
