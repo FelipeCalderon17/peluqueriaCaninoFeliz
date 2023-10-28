@@ -36,8 +36,9 @@
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                    <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                     <li class="nav-item "><a href="productos.php" class="nav-link">Productos</a></li>
+                    <li class="nav-item active"><a href="clientes.php" class="nav-link">Clientes</a></li>
                 </ul>
             </div>
         </div>
