@@ -5,9 +5,9 @@
     <title>Pet Sitting - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="css/animate.css">
@@ -29,15 +29,15 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="inicio.html"><span class="flaticon-pawprint-1 mr-2"></span>Canino
+            <a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
                 Feliz</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars"></span> Menu
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="inicio.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item "><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                    <li class="nav-item "><a href="productos.php" class="nav-link">Productos</a></li>
                 </ul>
             </div>
         </div>
@@ -61,16 +61,20 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <form>
+                            <form method="post" action="../controlador/agregarCliente.php">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                    <label for="exampleInputEmail1" class="form-label">Correo</label>
+                                    <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="pass_usuario" name="pass_usuario">
+                                </div>
+                                <!-- <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Fecha</label>
                                     <input type="date" class="form-control" id="exampleInputPassword1">
                                 </div>
@@ -82,9 +86,9 @@
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
                                     </select>
-                                </div>
+                                </div> -->
 
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
                             </form>
                         </div>
                     </div>
@@ -102,35 +106,57 @@
                     </div>
                     <div class="row">
                         <div class="col">
-
                             <div class="card-body">
                                 <table class="table table-striped table-hover border">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Correo</th>
+                                            <th scope="col">Contraseña</th>
+                                            <th scope="col" class="text-center">Editar</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
+                                    <tbody><?php
+                                            try {
+                                                // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                                                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+
+                                                // Configurar el manejo de errores y excepciones.
+                                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                                                $stmt = $pdo->prepare("SELECT * FROM usuario");
+
+                                                // Paso 4: Ejecutar la consulta preparada.
+                                                $stmt->execute();
+
+                                                // Paso 5: Recuperar resultados.
+                                                while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                                <tr>
+                                                    <th scope="row"><?php echo $fila['id_usuario'] ?></th>
+                                                    <td><?php echo $fila['nombre_usuario'] ?></td>
+                                                    <td><?php echo $fila['correo_usuario'] ?></td>
+                                                    <td><?php echo $fila['pass_usuario'] ?></td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCliente" onclick="<?php $_SESSION["id"] = $fila['id_usuario']; ?>">
+                                                        </button>
+                                                    </td>
+                                                </tr>
+
+                                        <?php
+                                                    /* echo "idPelicula: " . $fila['idPelicula'] . ", nombrePelicula: " . $fila['nombrePelicula'] . ", fecha: " . $fila['fecha'] . "<br>"; */
+                                                }
+
+                                                // Paso 6: Cerrar la conexión a la base de datos.
+                                                $pdo = null;
+                                            } catch (PDOException $e) {
+                                                // Manejo de errores en caso de que ocurra una excepción.
+                                                echo "Error: " . $e->getMessage();
+                                            }
+                                        ?>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -140,6 +166,84 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="editarCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar cliente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="../controlador/editarCliente.php">
+                    <div class="modal-body">
+                        <?php
+                        try {
+                            // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+
+                            // Configurar el manejo de errores y excepciones.
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                            // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                            $stmt = $pdo->prepare("SELECT * FROM usuario WHERE id_usuario=" . $_SESSION["id"]);
+
+                            // Paso 4: Ejecutar la consulta preparada.
+                            $stmt->execute();
+
+                            // Paso 5: Recuperar resultados.
+                            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+
+
+                                <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp" value="<?php echo $fila['nombre_usuario'] ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Correo</label>
+                                    <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="pass_usuario" name="pass_usuario" value="<?php
+                                                                                                                                require_once '../modelo/mycript.php';
+                                                                                                                                echo decrypt($fila['pass_usuario']) ?>">
+                                </div>
+                                <!-- <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Select</label>
+                                    <select class="form-control form-select w-100" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div> -->
+
+
+
+                        <?php
+                            }
+
+                            // Paso 6: Cerrar la conexión a la base de datos.
+                            $pdo = null;
+                        } catch (PDOException $e) {
+                            // Manejo de errores en caso de que ocurra una excepción.
+                            echo "Error: " . $e->getMessage();
+                        }
+                        ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -227,7 +331,7 @@
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -244,6 +348,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
+
 
 
 
