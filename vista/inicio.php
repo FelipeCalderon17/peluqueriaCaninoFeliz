@@ -39,6 +39,7 @@
 					<li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
 					<li class="nav-item "><a href="productos.php" class="nav-link">Productos</a></li>
 					<li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
+					<li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
 				</ul>
 			</div>
 		</div>
