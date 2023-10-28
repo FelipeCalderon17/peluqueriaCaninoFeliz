@@ -169,7 +169,7 @@
                                     </ul>
                                     <div class="card-body">
                                         <input type="submit" value="Comprar" class="btn btn-primary">
-                                        <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarProducto" onclick="<?php $_SESSION["id"] = $fila['id_usuario']; ?>">
+                                        <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarProducto" onclick="<?php $_SESSION["id"] = $fila['id_producto']; ?>Editar  ">
                                         </button>
 
                                     </div>
@@ -187,18 +187,13 @@
                                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Producto</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form method="post" action="../controlador/editarCliente.php">
+                                        <form method="post" action="../controlador/editarProducto.php">
                                             <div class="modal-body">
                                                 <?php
                                                 try {
-                                                    // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-                                                    $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
-
-                                                    // Configurar el manejo de errores y excepciones.
-                                                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                                     // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                                                    $stmt = $pdo->prepare("SELECT * FROM producto WHERE id_producto=" . $_SESSION["id"]);
+                                                    $stmt = $pdo->prepare("SELECT * FROM producto");
 
                                                     // Paso 4: Ejecutar la consulta preparada.
                                                     $stmt->execute();
@@ -209,33 +204,32 @@
 
 
                                                         <input type="text" class="form-control" id="id_producto" name="id_producto" aria-describedby="emailHelp" value="<?php echo $fila['id_producto'] ?>" hidden>
+
                                                         <div class="mb-3">
-                                                            <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                                                            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp" value="<?php echo $fila['nombre_usuario'] ?>">
+                                                            <label for="exampleInputEmail1" class="form-label">Nombre Producto</label>
+                                                            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="emailHelp" value="<?php echo $fila['nombre_producto'] ?>">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="exampleInputEmail1" class="form-label">Correo</label>
-                                                            <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                                            <label for="exampleInputEmail1" class="form-label">Existencia Producto</label>
+                                                            <input type="text" class="form-control" id="existenciaProducto" name="existenciaProducto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                                            <input type="password" class="form-control" id="pass_usuario" name="pass_usuario" value="<?php
-                                                                                                                                                        require_once '../modelo/mycript.php';
-                                                                                                                                                        echo decrypt($fila['pass_usuario']) ?>">
+                                                            <label for="exampleInputEmail1" class="form-label">Tipo Producto</label>
+                                                            <input type="text" class="form-control" id="tipoProducto" name="tipoProducto" aria-describedby="emailHelp" value="<?php echo $fila['tipo_producto'] ?>">
                                                         </div>
-                                                        <!-- <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="exampleInputPassword1">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Select</label>
-                                    <select class="form-control form-select w-100" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div> -->
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Estado Producto</label>
+                                                            <select class=" form-select w-100" aria-label="Default select example" name="estadoProducto" value="<?php echo $fila['estado_producto'] ?>">
+                                                                <option value="Activo">Activo</option>
+                                                                <option value="Inactivo">Inactivo</option>
+
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Descripcion Producto</label>
+                                                            <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" aria-describedby="emailHelp" value="<?php echo $fila['descripcion_producto'] ?>">
+                                                        </div>
+
 
 
 
@@ -251,7 +245,7 @@
                                                 ?>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                                <button type="submit" class="btn btn-primary">Actualizar</button>
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                             </div>
                                         </form>
