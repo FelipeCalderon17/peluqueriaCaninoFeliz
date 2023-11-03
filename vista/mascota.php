@@ -38,8 +38,8 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                     <li class="nav-item "><a href="productos.php" class="nav-link">Productos</a></li>
-                    <li class="nav-item active"><a href="clientes.php" class="nav-link">Clientes</a></li>
-                    <li class="nav-item"><a href="mascota.php" class="nav-link">Mascota</a></li>
+                    <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
+                    <li class="nav-item active"><a href="mascota.php" class="nav-link">Mascota</a></li>
                 </ul>
             </div>
         </div>
@@ -59,22 +59,67 @@
                 </div>
                 <div class="col-md-7 pl-md-5 py-md-5">
                     <div class="heading-section pt-md-5">
-                        <h2 class="mb-4">Agregar Clientes</h2>
+                        <h2 class="mb-4">Agregar Mascotas</h2>
                     </div>
                     <div class="row">
                         <div class="col">
                             <form method="post" action="../controlador/agregarCliente.php">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                    <label for="exampleInputEmail1" class="form-label">Nombre Mascota</label>
                                     <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Correo</label>
-                                    <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp">
+                                    <label for="exampleInputPassword1" class="form-label">Tipo Mascota</label>
+                                    <select class="form-select w-100" aria-label="Default select example">
+                                        <option value="1">Perro</option>
+                                        <option value="2">Gato</option>
+                                        <option value="3">Bladimir</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" id="pass_usuario" name="pass_usuario">
+                                    <label for="exampleInputEmail1" class="form-label">Raza</label>
+                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Requisitos Especiales</label>
+                                    <textarea name="" id="" rows="5" class="form-control" style="resize: none;"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Dueño</label>
+                                    <select class="form-select w-100" aria-label="Default select example">
+
+                                        <?php
+                                        try {
+                                            // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                                            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+
+                                            // Configurar el manejo de errores y excepciones.
+                                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                            // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                                            $stmt = $pdo->prepare("SELECT * FROM usuario where rol_usuario = 'cliente'");
+
+                                            // Paso 4: Ejecutar la consulta preparada.
+                                            $stmt->execute();
+
+                                            // Paso 5: Recuperar resultados.
+                                            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                                <option value="<?php echo $fila['id_usuario'] ?>"><?php echo $fila['nombre_usuario'] ?></option>
+
+                                        <?php
+                                                /* echo "idPelicula: " . $fila['idPelicula'] . ", nombrePelicula: " . $fila['nombrePelicula'] . ", fecha: " . $fila['fecha'] . "<br>"; */
+                                            }
+
+                                            // Paso 6: Cerrar la conexión a la base de datos.
+                                            $pdo = null;
+                                        } catch (PDOException $e) {
+                                            // Manejo de errores en caso de que ocurra una excepción.
+                                            echo "Error: " . $e->getMessage();
+                                        }
+                                        ?>
+
+                                    </select>
                                 </div>
                                 <!-- <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Fecha</label>
