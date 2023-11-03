@@ -13,7 +13,7 @@ try {
 
 
     // Paso 3: Vincular parámetros a la consulta preparada.
-    $idEmpleado = $_POST['idEmpleado'];
+    $idEmpleado = $_POST['id_usuario'];
     $nombreEmpleado = $_POST['nombreEmpleado'];
     $correo = $_POST['correoEmpleado'];
     $password = encrypt($_POST['contraseña']);
