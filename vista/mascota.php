@@ -219,6 +219,7 @@
                                                             </div>
                                                             <form method="post" action="../controlador/editarMascota.php">
                                                                 <div class="modal-body">
+                                                                    <input type="text" class="form-control" id="id_mascotaEdit" name="id_mascotaEdit" value="<?php echo $fila['id_mascota'] ?>" hidden aria-describedby="emailHelp">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Nombre Mascota</label>
                                                                         <input type="text" class="form-control" id="nombre_mascotaEdit" name="nombre_mascotaEdit" value="<?php echo $fila['nombre_mascota'] ?>" aria-describedby="emailHelp">
