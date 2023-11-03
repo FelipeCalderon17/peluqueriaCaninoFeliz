@@ -63,30 +63,30 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <form method="post" action="../controlador/agregarCliente.php">
+                            <form method="post" action="../controlador/agregarMascota.php">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Nombre Mascota</label>
-                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp">
+                                    <input type="text" class="form-control" id="nombre_mascota" name="nombre_mascota" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Tipo Mascota</label>
-                                    <select class="form-select w-100" aria-label="Default select example">
-                                        <option value="1">Perro</option>
-                                        <option value="2">Gato</option>
-                                        <option value="3">Bladimir</option>
+                                    <select class="form-select w-100" id="tipo_mascota" name="tipo_mascota" aria-label="Default select example">
+                                        <option value="Perro">Perro</option>
+                                        <option value="Gato">Gato</option>
+                                        <option value="Bladimir">Bladimir</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Raza</label>
-                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp">
+                                    <input type="text" class="form-control" id="raza" name="raza" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Requisitos Especiales</label>
-                                    <textarea name="" id="" rows="5" class="form-control" style="resize: none;"></textarea>
+                                    <textarea name="requisitos_especiales" id="requisitos_especiales" rows="5" class="form-control" style="resize: none;"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Dueño</label>
-                                    <select class="form-select w-100" aria-label="Default select example">
+                                    <select class="form-select w-100" name="usuario_id_usuario" id="usuario_id_usuario" aria-label="Default select example">
 
                                         <?php
                                         try {
@@ -108,7 +108,6 @@
                                                 <option value="<?php echo $fila['id_usuario'] ?>"><?php echo $fila['nombre_usuario'] ?></option>
 
                                         <?php
-                                                /* echo "idPelicula: " . $fila['idPelicula'] . ", nombrePelicula: " . $fila['nombrePelicula'] . ", fecha: " . $fila['fecha'] . "<br>"; */
                                             }
 
                                             // Paso 6: Cerrar la conexión a la base de datos.
@@ -121,20 +120,6 @@
 
                                     </select>
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="exampleInputPassword1">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Select</label>
-                                    <select class="form-control form-select w-100" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div> -->
-
                                 <button type="submit" class="btn btn-primary">Enviar</button>
                             </form>
                         </div>
@@ -158,9 +143,11 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Correo</th>
-                                            <th scope="col">Contraseña</th>
+                                            <th scope="col">Nombre Mascota</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Raza</th>
+                                            <th scope="col">Requisitos Especiales</th>
+                                            <th scope="col">Dueño</th>
                                             <th scope="col" class="text-center">Editar</th>
                                         </tr>
                                     </thead>
@@ -173,7 +160,7 @@
                                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                                 // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                                                $stmt = $pdo->prepare("SELECT * FROM usuario where rol_usuario = 'cliente'");
+                                                $stmt = $pdo->prepare("SELECT * FROM mascota ");
 
                                                 // Paso 4: Ejecutar la consulta preparada.
                                                 $stmt->execute();
@@ -182,52 +169,118 @@
                                                 while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                             ?>
                                                 <tr>
-                                                    <th scope="row"><?php echo $fila['id_usuario'] ?></th>
-                                                    <td><?php echo $fila['nombre_usuario'] ?></td>
-                                                    <td><?php echo $fila['correo_usuario'] ?></td>
-                                                    <td><?php echo $fila['pass_usuario'] ?></td>
+                                                    <th scope="row"><?php echo $fila['id_mascota'] ?></th>
+                                                    <td><?php echo $fila['nombre_mascota'] ?></td>
+                                                    <td><?php echo $fila['tipo_mascota'] ?></td>
+                                                    <td><?php echo $fila['raza'] ?></td>
+                                                    <td><?php echo $fila['requisitos_especiales'] ?></td>
+                                                    <td><?php
+                                                        try {
+                                                            // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                                                            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+
+                                                            // Configurar el manejo de errores y excepciones.
+                                                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                            // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                                                            $stmt2 = $pdo->prepare("SELECT * FROM usuario where id_usuario = :usuario ");
+                                                            $usuario = $fila['usuario_id_usuario'];
+                                                            $stmt2->bindParam(":usuario", $usuario, PDO::PARAM_STR);
+                                                            // Paso 4: Ejecutar la consulta preparada.
+                                                            $stmt2->execute();
+
+                                                            // Paso 5: Recuperar resultados.
+                                                            while ($fila2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                                                        ?>
+                                                                <?php echo $fila2['nombre_usuario'] ?>
+
+                                                        <?php
+                                                            }
+
+                                                            // Paso 6: Cerrar la conexión a la base de datos.
+                                                            $pdo = null;
+                                                        } catch (PDOException $e) {
+                                                            // Manejo de errores en caso de que ocurra una excepción.
+                                                            echo "Error: " . $e->getMessage();
+                                                        }
+                                                        ?>
+                                                    </td>
                                                     <td class="text-center">
-                                                        <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCliente<?php echo $fila['id_usuario'] ?> ">
+                                                        <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarMascota<?php echo $fila['id_mascota'] ?> ">
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                <div class="modal fade" id="editarCliente<?php echo $fila['id_usuario'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal fade" id="editarMascota<?php echo $fila['id_mascota'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar cliente</h1>
+                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Mascota</h1>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form method="post" action="../controlador/editarCliente.php">
+                                                            <form method="post" action="../controlador/editarMascota.php">
                                                                 <div class="modal-body">
-                                                                    <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                                                                        <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp" value="<?php echo $fila['nombre_usuario'] ?>">
+                                                                        <label for="exampleInputEmail1" class="form-label">Nombre Mascota</label>
+                                                                        <input type="text" class="form-control" id="nombre_mascotaEdit" name="nombre_mascotaEdit" value="<?php echo $fila['nombre_mascota'] ?>" aria-describedby="emailHelp">
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">Correo</label>
-                                                                        <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                                                        <label for="exampleInputPassword1" class="form-label">Tipo Mascota</label>
+                                                                        <select class="form-select w-100" id="tipo_mascotaEdit" name="tipo_mascotaEdit" aria-label="Default select example">
+                                                                            <option value="Perro">Perro</option>
+                                                                            <option value="Gato">Gato</option>
+                                                                            <option value="Bladimir">Bladimir</option>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                                                        <input type="password" class="form-control" id="pass_usuario" name="pass_usuario" value="<?php
-                                                                                                                                                                    require_once '../modelo/mycript.php';
-                                                                                                                                                                    echo decrypt($fila['pass_usuario']) ?>">
+                                                                        <label for="exampleInputEmail1" class="form-label">Raza</label>
+                                                                        <input type="text" class="form-control" id="razaEdit" name="razaEdit" value="<?php echo $fila['raza'] ?>" aria-describedby="emailHelp">
                                                                     </div>
-                                                                    <!-- <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="exampleInputPassword1">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Select</label>
-                                    <select class="form-control form-select w-100" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div> -->
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">Requisitos Especiales</label>
+                                                                        <textarea name="requisitos_especialesEdit" id="requisitos_especialesEdit" rows="5" class="form-control" style="resize: none;"><?php echo $fila['requisitos_especiales'] ?></textarea>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputPassword1" class="form-label">Dueño</label>
+                                                                        <select class="form-select w-100" name="usuario_id_usuarioEdit" id="usuario_id_usuarioEdit" aria-label="Default select example">
+
+                                                                            <?php
+                                                                            try {
+                                                                                // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                                                                                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+
+                                                                                // Configurar el manejo de errores y excepciones.
+                                                                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                                                // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                                                                                $stmt3 = $pdo->prepare("SELECT * FROM usuario where rol_usuario = 'cliente'");
+
+                                                                                // Paso 4: Ejecutar la consulta preparada.
+                                                                                $stmt3->execute();
+
+                                                                                // Paso 5: Recuperar resultados.
+                                                                                while ($fila3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
+
+                                                                                    if ($fila['usuario_id_usuario'] === $fila3['id_usuario']) {
+                                                                            ?>
+                                                                                        <option value="<?php echo $fila3['id_usuario'] ?>" selected><?php echo $fila3['nombre_usuario'] ?></option>
+                                                                                    <?php } else {
+                                                                                    ?>
+                                                                                        <option value="<?php echo $fila3['id_usuario'] ?>"><?php echo $fila3['nombre_usuario'] ?></option>
+                                                                                    <?php
+                                                                                    } ?>
+                                                                            <?php
+                                                                                }
+
+                                                                                // Paso 6: Cerrar la conexión a la base de datos.
+                                                                                $pdo = null;
+                                                                            } catch (PDOException $e) {
+                                                                                // Manejo de errores en caso de que ocurra una excepción.
+                                                                                echo "Error: " . $e->getMessage();
+                                                                            }
+                                                                            ?>
+
+                                                                        </select>
+                                                                    </div>
 
 
 

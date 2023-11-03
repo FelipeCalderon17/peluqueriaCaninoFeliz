@@ -1,6 +1,10 @@
 <?php
 //Controla el inicio de sesión
-
+/* echo $_POST['nombre_mascota'];
+echo $_POST['tipo_mascota'];
+echo $_POST['raza'];
+echo $_POST['requisitos_especiales'];
+echo $_POST['usuario_id_usuario']; */
 //Se verifica que existan datos en el formulario
 if (
     isset($_POST['nombre_mascota']) && !empty($_POST['nombre_mascota']) &&
