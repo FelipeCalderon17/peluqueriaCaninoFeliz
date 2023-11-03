@@ -9,15 +9,15 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-    $consultaAgregar = "UPDATE usuario SET nombre_usuario = :nombreEmpleado, correo_usuario = :correoEmpleado, pass_usuario = :pass, rol_usuario = :Empleado WHERE id_usuario = :idEmpleado";
+    $consultaAgregar = "UPDATE usuario SET nombre_usuario = :nombreEmpleado, correo_usuario = :correoEmpleado, pass_usuario = :pass WHERE id_usuario = :idEmpleado";
 
 
     // Paso 3: Vincular parámetros a la consulta preparada.
-    $idEmpleado = $_POST['idEmpleado'];
+    $idEmpleado = $_POST['id_usuario'];
     $nombreEmpleado = $_POST['nombreEmpleado'];
     $correo = $_POST['correoEmpleado'];
     $password = encrypt($_POST['contraseña']);
-    $rol = $_POST['rol'];
+
 
 
     $stmt = $pdo->prepare($consultaAgregar);
@@ -25,7 +25,7 @@ try {
     $stmt->bindParam(':nombreEmpleado', $nombreEmpleado, PDO::PARAM_STR);
     $stmt->bindParam(':correoEmpleado', $correo, PDO::PARAM_STR);
     $stmt->bindParam(':pass', $password, PDO::PARAM_STR);
-    $stmt->bindParam(':Empleado', $rol, PDO::PARAM_STR);
+
 
     // Paso 4: Ejecutar la consulta preparada.
     $stmt->execute();
