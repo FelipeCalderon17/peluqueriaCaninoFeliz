@@ -134,7 +134,7 @@
             <div class="row d-flex no-gutters">
                 <div class="col-md-12 pl-md-5 py-md-5">
                     <div class="heading-section pt-md-5 text-center">
-                        <h2 class="mb-4 ">Tabla Clientes</h2>
+                        <h2 class="mb-4 ">Tabla Mascotas</h2>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -217,7 +217,7 @@
                                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Mascota</h1>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form method="post" action="../controlador/editarMascota.php">
+                                                            <form method="post" action="../controlador/editarMascotas.php">
                                                                 <div class="modal-body">
                                                                     <input type="text" class="form-control" id="id_mascotaEdit" name="id_mascotaEdit" value="<?php echo $fila['id_mascota'] ?>" hidden aria-describedby="emailHelp">
                                                                     <div class="mb-3">

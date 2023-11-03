@@ -26,15 +26,17 @@ if (
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-        $stmt = $pdo->prepare("UPDATE mascota SET nombre_usuario = :nombre, correo_usuario = :correo, pass_usuario = :pass WHERE id_usuario = :id");
+        $stmt = $pdo->prepare("UPDATE mascota SET nombre_mascota = :nombre, tipo_mascota = :tipo , raza = :raza, requisitos_especiales = :requisitos , usuario_id_usuario = :usuario WHERE id_mascota = :id");
 
 
         // Paso 3: Vincular parámetros a la consulta preparada.
+        $id = $_POST['id_mascotaEdit'];
         $nombre = $_POST['nombre_mascotaEdit'];
         $tipo = $_POST['tipo_mascotaEdit'];
         $raza = $_POST['razaEdit'];
         $requisitos = $_POST['requisitos_especialesEdit'];
         $usuario = $_POST['usuario_id_usuarioEdit'];
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
         $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
         $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
         $stmt->bindParam(":raza", $raza, PDO::PARAM_STR);
@@ -44,7 +46,7 @@ if (
         // Paso 4: Ejecutar la consulta preparada.
         $stmt->execute();
 
-        header("Location: ../vista/clientes.php");
+        header("Location: ../vista/mascota.php");
 
         // Paso 6: Cerrar la conexión a la base de datos.
         $pdo = null;
