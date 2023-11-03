@@ -6,7 +6,7 @@ try {
 }
 
 // Consulta preparada para evitar inyección de SQL
-$sql = "SELECT id_mascota,nombre_mascota FROM mascota WHERE usuario_id_usuario = 1";
+$sql = "SELECT id_mascota,nombre_mascota FROM mascota WHERE usuario_id_usuario = 2";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
@@ -14,13 +14,15 @@ $stmt->execute();
 $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Consulta preparada para evitar inyección de SQL
-$sql2 = "SELECT * FROM cita inner join mascota on id_mascota = mascota_id_mascota inner join usuario on usuario_id_usuario = id_usuario inner join servicio on id_cita = cita_id_cita where id_usuario =1";
+$sql2 = "SELECT * FROM cita inner join mascota on id_mascota = mascota_id_mascota inner join usuario on usuario_id_usuario = id_usuario ";
 $stmt2 = $pdo->prepare($sql2);
 $stmt2->execute();
 
 // Captura los datos de la consulta, captura una sola fila
-$fila2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-$fila3 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+$fila2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +35,7 @@ $fila3 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="css/animate.css">
 
@@ -141,23 +144,71 @@ $fila3 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                             <th scope="col">Fecha Cita</th>
                                             <th scope="col">Mascota</th>
                                             <th scope="col">Servicios</th>
+                                            <th scope="col" class="text-center">Editar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php
+                                        foreach ($fila2 as $cita) {
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $cita['id_cita'] ?></td>
+                                                <td><?php echo $cita['fecha_cita'] ?></td>
+                                                <td><?php echo $cita['nombre_mascota'] ?></td>
+                                                <?php
+                                                $sql3 = "SELECT tipo_servicio from servicio where cita_id_cita=:idCita";
+                                                $stmt3 = $pdo->prepare($sql3);
+                                                $stmt3->bindParam(':idCita', $cita['id_cita'], PDO::PARAM_STR);
+                                                $stmt3->execute();
+                                                $fila3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+                                                ?>
+                                                <td>
+                                                    <ul>
+                                                        <?php
+                                                        foreach ($fila3 as $servicio) {
+                                                        ?>
+                                                            <li><?php echo $servicio['tipo_servicio'] ?></li>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCita<?php echo $cita['id_cita'] ?>">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <div class="modal fade" id="editarCita<?php echo $cita['id_cita'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar cita</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form method="post" action="../controlador/editarCliente.php">
+                                                            <div class="modal-body">
+                                                                <input type="text" class="form-control" name="idCita" aria-describedby="emailHelp" value="<?php echo $cita['id_cita'] ?>" hidden>
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Fecha cita</label>
+                                                                    <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp" value="<?php echo $cita['fecha_cita'] ?>">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Mascota</label>
+                                                                    <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
 
-                                         <tr>
-                                         <td><?php echo $cita['id_cita'] ?></td>
-                                         <td><?php echo $cita['fecha_cita'] ?></td>
-                                         <td><?php echo $cita['nombre_mascota'] ?></td>
-                                         <td>
-                                         <ul>
-                                         <?php
-                                         foreach($fila3 as $servicio){ ?>
-                                            <li><?php echo $servicio['tipo_servicio']?></li>
-                                            <?php
-                                         }
-                                         ?> </ul></td>
-                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -254,7 +305,7 @@ $fila3 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
