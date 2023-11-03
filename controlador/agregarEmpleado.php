@@ -5,8 +5,7 @@
 if (
     isset($_POST['nombreEmpleado']) && !empty($_POST['nombreEmpleado']) &&
     isset($_POST['correoEmpleado']) && !empty($_POST['correoEmpleado']) &&
-    isset($_POST['contraseña']) && !empty($_POST['contraseña']) &&
-    isset($_POST['rol']) && !empty($_POST['rol'])
+    isset($_POST['contraseña']) && !empty($_POST['contraseña'])
 ) {
 
     require_once '../modelo/mycript.php';
@@ -18,19 +17,19 @@ if (
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-        $consultaAgregar = "INSERT INTO usuario(nombre_usuario, correo_usuario, pass_usuario, rol_usuario) VALUES (:nombreEmpleado, :correoEmpleado, :pass, :Empleado)";
+        $consultaAgregar = "INSERT INTO usuario(nombre_usuario, correo_usuario, pass_usuario, rol_usuario) VALUES (:nombreEmpleado, :correoEmpleado, :pass, :empleado)";
 
         // Paso 3: Vincular parámetros a la consulta preparada.
         $nombreEmpleado = $_POST['nombreEmpleado'];
         $correo = $_POST['correoEmpleado'];
         $password = encrypt($_POST['contraseña']);
-        $rol = $_POST['rol'];
+        $empleado = "empleado";
 
         $stmt = $pdo->prepare($consultaAgregar);
         $stmt->bindParam(':nombreEmpleado', $nombreEmpleado, PDO::PARAM_STR);
         $stmt->bindParam(':correoEmpleado', $correo, PDO::PARAM_STR);
         $stmt->bindParam(':pass', $password, PDO::PARAM_STR);
-        $stmt->bindParam(':Empleado', $rol, PDO::PARAM_STR);
+        $stmt->bindParam(':empleado', $empleado, PDO::PARAM_STR);
 
         // Paso 4: Ejecutar la consulta preparada.
         $stmt->execute();
