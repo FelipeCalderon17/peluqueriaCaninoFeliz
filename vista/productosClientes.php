@@ -31,6 +31,7 @@
 
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -82,16 +83,16 @@
         <div class="row">
             <div class="col-3">
 
-                <h1>
+                <!--  <h1>
                     <button type="button" class="btn btn-primary mr-md-4 py-3 px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Registro de productos
                     </button>
-                </h1>
+                </h1> -->
 
 
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -100,7 +101,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="../controlador/agregarProducto.php" method="post">
-                                    <!-- <input name="id" value="" type="hiddennn"> -->
+                                    <input name="id" value="" type="hiddennn"> 
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Nombre de producto</label>
                                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto">
@@ -130,13 +131,13 @@
                                         <input type="submit" value="Guardar" class="btn btn-primary">
                                     </div>
 
-                                    <!-- <button type="submit" class="btn btn-primary">Guardar</button> -->
+                                   
                                 </form>
                             </div>
 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -150,13 +151,13 @@
                         <h2 class="mb-4 text-center">Productos</h2>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col d-flex">
 
                             <?php
                             while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             ?>
 
-                                <div class="card" style="width: 18rem;">
+                                <div class="card m-2" style="width: 18rem;">
                                     <img src="./images/jabon perro.jpg" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $fila['nombre_producto'] ?></h5>
@@ -187,8 +188,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Petsitting</h2>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                    <h2 class="footer-heading">Cuidado mascotas</h2>
+                    <p>Nos encargamos del mejor cuidado para tu mascota , utilizando los mejores productos para ellos
+
+                    </p>
                     <ul class="ftco-footer-social p-0">
                         <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span class="fa fa-twitter"></span></a></li>
                         <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span class="fa fa-facebook"></span></a></li>
@@ -196,11 +199,11 @@
                     </ul>
                 </div>
                 <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Latest News</h2>
+                    <h2 class="footer-heading">Ultimas noticias</h2>
                     <div class="block-21 mb-4 d-flex">
                         <a class="img mr-4 rounded" style="background-image: url(images/image_1.jpg);"></a>
                         <div class="text">
-                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                            <h3 class="heading"><a href="#">nuestros paseadores caninos</a></h3>
                             <div class="meta">
                                 <div><a href="#"><span class="icon-calendar"></span> April 7, 2020</a></div>
                                 <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -211,7 +214,7 @@
                     <div class="block-21 mb-4 d-flex">
                         <a class="img mr-4 rounded" style="background-image: url(images/image_2.jpg);"></a>
                         <div class="text">
-                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                            <h3 class="heading"><a href="#">Premio al los mas lindos</a></h3>
                             <div class="meta">
                                 <div><a href="#"><span class="icon-calendar"></span> April 7, 2020</a></div>
                                 <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -220,44 +223,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 pl-lg-5 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Quick Links</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Home</a></li>
-                        <li><a href="#" class="py-2 d-block">About</a></li>
-                        <li><a href="#" class="py-2 d-block">Services</a></li>
-                        <li><a href="#" class="py-2 d-block">Works</a></li>
-                        <li><a href="#" class="py-2 d-block">Blog</a></li>
-                        <li><a href="#" class="py-2 d-block">Contact</a></li>
-                    </ul>
-                </div>
+
                 <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Have a Questions?</h2>
+                    <h2 class="footer-heading">Tienes preguntas?</h2>
                     <div class="block-23 mb-3">
                         <ul>
-                            <li><span class="icon fa fa-map"></span><span class="text">203 Fake St. Mountain View, San
-                                    Francisco, California, USA</span></li>
+                            <li><span class="icon fa fa-map"></span><span class="text">CTA Cartago, valle del cauca</span></li>
                             <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929
                                         210</span></a></li>
-                            <li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">info@yourdomain.com</span></a></li>
+                            <li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">adso@gmail.com</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-md-12 text-center">
 
-                    <p class="copyright">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script> All rights reserved | This template
-                        is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
-            </div>
         </div>
     </footer>
 

@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +38,7 @@
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
-					<li class="nav-item "><a href="productos.php" class="nav-link">Productos</a></li>
+					<li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
 					<li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
 					<li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
 					<li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
