@@ -9,6 +9,7 @@ if (
     $existenciaProducto = $_POST['existencia_producto'];
     $cantidadComprar = $_POST['cantidadComprar'];
     $idProducto = $_POST['id_producto'];
+    $fechahoy = date('Y-m-d');
     $totalProductos = $existenciaProducto - $cantidadComprar;
     if ($totalProductos < 0) {
         $_SESSION['compra'] = 'No hay existencias suficientes';
@@ -24,11 +25,17 @@ if (
 
             // Paso 2: Preparar una consulta SQL usando consultas preparadas.
             // Consulta preparada para evitar inyección de SQL
-            $sql = "UPDATE producto set existencia_producto=:totalProductos  WHERE id_producto = :idProducto";
+
+            $sql = "UPDATE producto set existencia_producto=:totalProductos,fecha_venta=:fechahoy,ventas_producto=:cantidadComprar  WHERE id_producto = :idProducto";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
             $stmt->bindParam(':totalProductos', $totalProductos, PDO::PARAM_STR);
+            $stmt->bindParam(':cantidadComprar', $cantidadComprar, PDO::PARAM_STR);
+            $stmt->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
             $stmt->execute();
+
+
+
             header("Location: ../vista/productosClientes.php");
         } catch (PDOException $e) {
             // Manejo de errores en caso de que ocurra una excepción.
