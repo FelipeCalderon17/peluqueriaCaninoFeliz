@@ -16,7 +16,7 @@ if (
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-        $stmt = $pdo->prepare("SELECT id_usuario,nombre_usuario, correo_usuario, pass_usuario FROM usuario WHERE correo_usuario = :correo && pass_usuario =  :pass");
+        $stmt = $pdo->prepare("SELECT id_usuario,nombre_usuario, correo_usuario, pass_usuario,rol_usuario FROM usuario WHERE correo_usuario = :correo && pass_usuario =  :pass");
 
         // Paso 3: Vincular parámetros a la consulta preparada.
         $correo = $_POST['correo_usuario'];
@@ -36,6 +36,7 @@ if (
             $_SESSION["login"] = true;
             $_SESSION["idUsuario"] = $fila['id_usuario'];
             $_SESSION["nombreUsuario"] = $fila['nombre_usuario'];
+            $_SESSION["rol_usuario"] = $fila['rol_usuario'];
         }
 
 

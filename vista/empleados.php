@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+// Verificar si el usuario ha iniciado sesión y es un administrador
+if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) {
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -361,3 +369,15 @@
 </body>
 
 </html>
+
+
+<?php 
+}
+else{
+    // Redirigir a la página de inicio o mostrar un mensaje de error
+    header("Location: inicio.php");
+    exit();
+}
+
+
+?>
