@@ -1,5 +1,5 @@
 <!-- <?PHP
-        //session_start();
+        session_start();
         //require_once '../modelo/MySQL.php';
         try {
             $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
@@ -61,8 +61,10 @@
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item "><a href="index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item active"><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li class="nav-item "><a href="index.php" class="nav-link">Inicio</a></li>
+                    <li class="nav-item active"><a href="#productos" class="nav-link">Productos</a></li>
+                    <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
+                    <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
                 </ul>
             </div>
         </div>
@@ -151,11 +153,12 @@
                         <h2 class="mb-4 text-center">Productos</h2>
                     </div>
                     <div class="row">
-                        <div class="col d-flex">
 
-                            <?php
-                            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            ?>
+
+                        <?php
+                        while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+                            <div class="col d-flex">
 
                                 <div class="card m-2" style="width: 18rem;">
                                     <img src="./images/jabon perro.jpg" class="card-img-top" alt="...">
@@ -173,11 +176,11 @@
 
                                     </div>
                                 </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
 
-                            <?php
-                            }
-                            ?>
-                        </div>
                     </div>
                 </div>
             </div>
