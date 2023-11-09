@@ -41,6 +41,7 @@
 					<li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
 					<li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
 					<li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
+					<li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
 				</ul>
 			</div>
 		</div>
