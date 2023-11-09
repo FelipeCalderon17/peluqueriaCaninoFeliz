@@ -15,7 +15,7 @@
 
         // Paso 4: Ejecutar la consulta preparada.
         $stmt->execute();
-
+        $existenciaProducto = $_POST['id_producto'];
         ?> -->
 
 
@@ -50,6 +50,19 @@
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes') {
+    ?><script>
+            alert("No puede comprar");
+        </script> <?php
+                    unset($_SESSION['compra']);
+                } else if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'OK') {
+                    ?>
+        <script>
+            alert("Puede comprar")
+        </script>
+    <?php unset($_SESSION['compra']);
+                } ?>
 
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -172,7 +185,40 @@
                                         <li class="list-group-item" style="color:green">Estado : <?php echo $fila['estado_producto'] ?></li>
                                     </ul>
                                     <div class="card-body">
-                                        <input type="submit" value="Comprar" class="btn btn-primary">
+                                        <input type="submit" value="Comprar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compra<?php echo $fila['id_producto'] ?>">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="compra<?php echo $fila['id_producto'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Selecione la cantidad de productos</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <form method="post" action="../controlador/ventaProductos.php">
+                                                <div class="mb-3">
+
+                                                    <input type="text" class="form-control" aria-describedby="emailHelp" value="<?php echo $fila['nombre_producto'] ?>" disabled>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputEmail1" class="form-label">Cantidad</label>
+                                                    <br>
+                                                    <input type="number" name="cantidadComprar" id="" placeholder="escribe la cantidad que deseas comprar...">
+                                                    <input class="form-control" aria-describedby="emailHelp" name="id_producto" value="<?php echo $fila['id_producto'] ?>">
+                                                    <input type="number" class="form-control" id="existencia_producto" name="existencia_producto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Comprar</button>
+                                                </div>
+                                            </form>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -180,6 +226,22 @@
                         <?php
                         }
                         ?>
+
+
+                        TODO:MODAL
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     </div>
                 </div>
