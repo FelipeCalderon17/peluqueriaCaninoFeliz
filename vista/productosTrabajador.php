@@ -65,6 +65,8 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item "><a href="index.php" class="nav-link">Inicio</a></li>
                     <li class="nav-item active"><a href="#productos" class="nav-link">Productos</a></li>
+                    <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
+                    <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
                 </ul>
             </div>
         </div>
@@ -161,7 +163,7 @@
     </div>
 
     <section id="productos" class="ftco-section ftco-no-pt ftco-no-pb">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row d-flex no-gutters">
 
                 <div class="col-md-12 pl-md-5 py-md-5">
@@ -169,11 +171,11 @@
                         <h2 class="mb-4 text-center">Productos</h2>
                     </div>
                     <div class="row">
-                        <div class="col d-flex">
 
-                            <?php
-                            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            ?>
+                        <?php
+                        while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+                            <div class="col d-flex">
 
                                 <div class="card m-2" style="width: 18rem;">
                                     <img src="./images/jabon perro.jpg" class="card-img-top" alt="...">
@@ -285,11 +287,11 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
 
-                            <?php
-                            }
-                            ?>
-                        </div>
 
                     </div>
                 </div>
