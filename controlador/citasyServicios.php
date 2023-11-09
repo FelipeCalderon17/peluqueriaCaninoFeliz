@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (
     isset($_POST['idMascota']) && !empty($_POST['idMascota']) &&
     isset($_POST['fechaCita']) && !empty($_POST['fechaCita'])

@@ -18,7 +18,7 @@ if ($_SESSION['login']) {
     $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta preparada para evitar inyección de SQL
-    $sql2 = "SELECT * FROM cita inner join mascota on id_mascota = mascota_id_mascota inner join usuario on usuario_id_usuario = :idUsuario ";
+    $sql2 = "SELECT cita.fecha_cita, cita.id_cita,mascota.nombre_mascota FROM cita inner join mascota on id_mascota = mascota_id_mascota inner join usuario on usuario_id_usuario = usuario.id_usuario WHERE usuario.id_usuario = :idUsuario ";
     $stmt2 = $pdo->prepare($sql2);
     $stmt2->bindParam(':idUsuario', $idUsuario, PDO::PARAM_STR);
     $stmt2->execute();
@@ -67,9 +67,30 @@ if ($_SESSION['login']) {
                     <span class="fa fa-bars"></span> Menu
                 </button>
                 <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
-                    </ul>
+                    <?php if ($_SESSION['rol_usuario'] == 'administrador') { ?>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
+                            <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
+                            <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
+                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                        </ul>
+                    <?php } ?>
+                    <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
+                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                        </ul>
+                    <?php } ?>
+                    <?php if ($_SESSION['rol_usuario'] == 'empleado') { ?>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
+                            <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
+                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                        </ul>
+                    <?php } ?>
                 </div>
             </div>
         </nav>
