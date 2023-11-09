@@ -36,7 +36,7 @@ $stmt->execute();
 // Captura los datos de la consulta, captura una sola fila
 $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-header("Location: ../vista/productosClientes.php");
+header("Location: ../vista/productosTrabajador.php");
 
 // Paso 6: Cerrar la conexión a la base de datos.
 $pdo = null;

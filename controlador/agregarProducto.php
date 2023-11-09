@@ -53,7 +53,7 @@ if (
 
     // $_SESSION['mensaje'] = "La Pelicula Fue Agregada Correctamente";
     // $_SESSION['mensajeTitu'] = "Pelicula Agregada";
-    header("Location:../vista/index.php");
+    header("Location:../vista/productosTrabajador.php");
 } else {
     // $_SESSION['mensaje'] = "No deje Campos Vacios";
     // $_SESSION['mensajeTitu'] = "Error al Agregar";

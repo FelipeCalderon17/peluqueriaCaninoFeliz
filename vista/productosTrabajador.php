@@ -63,7 +63,7 @@
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item "><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item "><a href="index.php" class="nav-link">Inicio</a></li>
                     <li class="nav-item active"><a href="#productos" class="nav-link">Productos</a></li>
                 </ul>
             </div>
@@ -254,6 +254,11 @@
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Descripcion Producto</label>
                                                         <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" aria-describedby="emailHelp" value="<?php echo $fila['descripcion_producto'] ?>">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Descripcion Producto</label>
+                                                        <input type="text" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
 
 
