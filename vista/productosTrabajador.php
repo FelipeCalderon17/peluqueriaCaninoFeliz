@@ -214,30 +214,11 @@
                                         <li class="list-group-item" style="color:green">Precio : <?php echo $fila['precio_producto'] ?></li>
                                     </ul>
                                     <div class="card-body">
-                                        <button type="submit" id="miBoton" value="Comprar" class="btn btn-primary">Comprar
+                                       
 
+                                     
 
-                                        </button>
-
-                                        <script>
-                                            document.getElementById('miBoton').addEventListener('click', function() {
-                                                Swal.fire({
-                                                    title: 'deseas efectuar la compra?',
-                                                    showDenyButton: true,
-                                                    showCancelButton: true,
-                                                    confirmButtonText: 'Comprar',
-                                                    denyButtonText: `salir`,
-                                                }).then((result) => {
-                                                    /* Read more about isConfirmed, isDenied below */
-                                                    if (result.isConfirmed) {
-                                                        Swal.fire('Confirmado!', '', 'success')
-                                                    } else if (result.isDenied) {
-                                                        Swal.fire('Seguro deseas salir?', '', 'info')
-                                                    }
-                                                })
-                                            });
-                                        </script>
-
+                                        
 
 
                                         <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarProducto<?php echo $fila['id_producto'] ?>">
@@ -257,6 +238,11 @@
                                             <form method="post" action="../controlador/editarProducto.php">
                                                 <div class="modal-body">
                                                     <input type="text" class="form-control" id="id_usuario" name="id_producto" aria-describedby="emailHelp" value="<?php echo $fila['id_producto'] ?>" hidden>
+
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Url Imagen</label>
+                                                        <input type="text" class="form-control" id="urlImagen" name="urlImagen" aria-describedby="emailHelp" value="<?php echo $fila['urlImagen'] ?>">
+                                                    </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Nombre Producto</label>
                                                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="emailHelp" value="<?php echo $fila['nombre_producto'] ?>">
@@ -297,18 +283,9 @@
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" value="s" id="actualizarSweet" class="btn btn-primary">Enviar</button>
+                                                    <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto']?>" class="btn btn-primary">Enviar</button>
 
-                                                    <script>
-                                                        document.getElementById('actualizarSweet').addEventListener('click', function() {
-                                                            Swal.fire({
-                                                                icon: 'success',
-                                                                title: 'Confirmado',
-                                                                text: 'Actualizado Correctamente!',
-
-                                                            })
-                                                        });
-                                                    </script>
+                                                   
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                                 </div>
                                             </form>
@@ -316,10 +293,20 @@
                                     </div>
                                 </div>
                             </div>
+                                                      <script>
+                                                        document.getElementById('actualizarSweet<?php echo $fila['id_producto']?>').addEventListener('click', function() {
+                                                            
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: 'Confirmado',
+                                                                text: 'Actualizado Correctamente!',
+                                                            })
+                                                        });
+                                                    </script>
                         <?php
                         }
                         ?>
-
+ 
 
                     </div>
                 </div>

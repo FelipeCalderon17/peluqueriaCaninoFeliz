@@ -102,7 +102,8 @@ header("Location: ../vista/productosClientes.php");
         }
     }
 } else {
-    echo "malo";
+    $_SESSION['compra'] = 'No hay existencias suficientes';
+        header("Location: ../vista/productosClientes.php");
 }
 
 ?>
