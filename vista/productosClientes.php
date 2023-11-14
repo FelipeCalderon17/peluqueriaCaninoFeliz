@@ -26,6 +26,7 @@
     <title>Pet Sitting - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -47,27 +48,40 @@
 
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <?php
     if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes') {
     ?><script>
-            alert("No puede comprar");
+            
+          Swal.fire({
+  title: "No puede comprar!",
+  text: "No hay suficiente stock !",
+  icon: "error"
+});
+        
         </script> <?php
                     unset($_SESSION['compra']);
                 } else if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'OK') {
                     ?>
         <script>
-            alert("Puede comprar")
+          Swal.fire({
+  title: "compra correcta!",
+  text: "Gracias por tu compra, vuelve pronto!",
+  icon: "success"
+});
         </script>
+
+        
     <?php unset($_SESSION['compra']);
                 } ?>
 
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><span class="flaticon-pawprint-1 mr-2"></span>Canino
+            <a class="navbar-brand" href="index.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
                 Feliz</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars"></span> Menu
@@ -198,9 +212,9 @@
                                         <p class="card-text"><?php echo $fila['descripcion_producto'] ?></p>
                                     </div>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item" style="background-color:green">Categoria: <?php echo $fila['tipo_producto'] ?></li>
-                                        <li class="list-group-item" style="color:green">Existencias: <?php echo $fila['existencia_producto'] ?> </li>
-                                        <li class="list-group-item" style="color:green">Estado : <?php echo $fila['estado_producto'] ?></li>
+                                        <li class="list-group-item">Categoria: <?php echo $fila['tipo_producto'] ?></li>
+                                        <li class="list-group-item" style="color:black">Existencias: <?php echo $fila['existencia_producto'] ?> </li>
+                                        <li class="list-group-item" style="color:black">Estado : <?php echo $fila['estado_producto'] ?></li>
                                     </ul>
                                     <div class="card-body">
                                         <input type="submit" value="Comprar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compra<?php echo $fila['id_producto'] ?>">
@@ -228,14 +242,38 @@
                                                     <label for="exampleInputEmail1" class="form-label">Cantidad</label>
                                                     <br>
                                                     <input type="number" name="cantidadComprar" id="" placeholder="escribe la cantidad que deseas comprar...">
-                                                    <input class="form-control" aria-describedby="emailHelp" name="id_producto" value="<?php echo $fila['id_producto'] ?>">
-                                                    <input type="number" class="form-control" id="existencia_producto" name="existencia_producto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
+                                                    <input class="form-control" type="hidden" aria-describedby="emailHelp" name="id_producto" value="<?php echo $fila['id_producto'] ?>">
+                                                    <input type="hidden" class="form-control" id="existencia_producto" name="existencia_producto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Comprar</button>
+                                                    <button type="submit" id="" class="btn btn-primary">Comprar</button>
                                                 </div>
                                             </form>
+
+
+
+
+
+                                            <!-- <script>
+                                            document.getElementById('comprar').addEventListener('click', function() {
+                                                Swal.fire({
+                                                    title: 'Compra Realizada con exito',
+                                                    showDenyButton: true,
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'confirmar',
+                                                    denyButtonText: `salir`,
+                                                }).then((result) => {
+                                                    /* Read more about isConfirmed, isDenied below */
+                                                    if (result.isConfirmed) {
+                                                        Swal.fire('Confirmado!', '', 'success')
+                                                    } else if (result.isDenied) {
+                                                        Swal.fire('Seguro deseas salir?', '', 'info')
+                                                    }
+                                                })
+                                            });
+                                        </script> -->
+
                                         </div>
 
                                     </div>
@@ -246,7 +284,7 @@
                         ?>
 
 
-                        TODO:MODAL
+                       
 
 
 

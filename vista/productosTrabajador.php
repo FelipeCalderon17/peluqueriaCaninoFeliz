@@ -1,5 +1,5 @@
 <!-- <?PHP
-        //session_start();
+        session_start();
         //require_once '../modelo/MySQL.php';
         try {
             $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
