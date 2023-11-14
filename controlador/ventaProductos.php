@@ -90,12 +90,12 @@ $stmt5->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
 // echo $idProducto;
 $stmt5->bindParam(':idventa', $idventa, PDO::PARAM_STR);
 $stmt5->bindParam(':cantidadComprar', $cantidadComprar, PDO::PARAM_STR);
-echo $cantidadComprar;
+//echo $cantidadComprar;
 $stmt5->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
 $stmt5->execute();
 
 
-header("x");
+header("controlador/productosClientes.php");
         } catch (PDOException $e) {
             // Manejo de errores en caso de que ocurra una excepción.
             echo "Error: " . $e->getMessage();
