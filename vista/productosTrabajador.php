@@ -124,13 +124,19 @@
                             <div class="modal-body">
                                 <form action="../controlador/agregarProducto.php" method="post">
                                     <!-- <input name="id" value="" type="hiddennn"> -->
+
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Imagen Producto URL</label>
+                                        <input type="text" class="form-control" id="urlImagen" name="urlImagen">
+                                    </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Nombre de producto</label>
                                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Existencias</label>
-                                        <input type="number" class="form-control" id="exampleInputPassword1" name="existenciaProducto">
+                                        <input type="number" class="form-control" id="existenciaProducto" name="existenciaProducto">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Tipo</label>
@@ -196,7 +202,7 @@
                             <div class="col d-flex">
 
                                 <div class="card m-2" style="width: 18rem;">
-                                    <img src="./images/jabon perro.jpg" class="card-img-top" alt="...">
+                                    <img src="<?php echo $fila['urlImagen'] ?>" class="card-img-top" height="300" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $fila['nombre_producto'] ?></h5>
                                         <p class="card-text"><?php echo $fila['descripcion_producto'] ?></p>
@@ -256,6 +262,10 @@
                                                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="emailHelp" value="<?php echo $fila['nombre_producto'] ?>">
                                                     </div>
                                                     <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Descripcion Producto</label>
+                                                        <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" aria-describedby="emailHelp" value="<?php echo $fila['descripcion_producto'] ?>">
+                                                    </div>
+                                                    <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Existencia Producto</label>
                                                         <input type="text" class="form-control" id="existenciaProducto" name="existenciaProducto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
                                                     </div>
@@ -272,14 +282,14 @@
                                                         </select>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Descripcion Producto</label>
-                                                        <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" aria-describedby="emailHelp" value="<?php echo $fila['descripcion_producto'] ?>">
+                                                        <label for="exampleInputEmail1" class="form-label">Precio Producto</label>
+                                                        <input type="text" class="form-control" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Descripcion Producto</label>
-                                                        <input type="text" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
-                                                    </div>
+                                                    
+
+
+                                    
 
 
 

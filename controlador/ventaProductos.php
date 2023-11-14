@@ -15,10 +15,10 @@ if (
         $_SESSION['compra'] = 'No hay existencias suficientes';
         header("Location: ../vista/productosClientes.php");
 
-        if ($cantidadComprar<=0) {
-            $_SESSION['compra'] = 'Curioso hp';
-            header("Location: ../vista/productosClientes.php");
-        }
+        // if ($cantidadComprar<=0) {
+        //     $_SESSION['compra'] = 'Curioso hp';
+        //     header("Location: ../vista/productosClientes.php");
+        // }
     } else {
         sleep(2);
         $_SESSION['compra'] = 'OK';

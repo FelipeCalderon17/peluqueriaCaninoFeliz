@@ -56,7 +56,6 @@
     if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes')
      {
     ?><script>
-            
           Swal.fire({
   title: "No puede comprar!",
   text: "No hay suficiente stock !",
@@ -207,7 +206,7 @@
                             <div class="col d-flex">
 
                                 <div class="card m-2" style="width: 18rem;">
-                                    <img src="./images/jabon perro.jpg" class="card-img-top" alt="...">
+                                    <img src="<?php echo $fila['urlImagen'] ?>" class="card-img-top" height="300" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $fila['nombre_producto'] ?></h5>
                                         <p class="card-text"><?php echo $fila['descripcion_producto'] ?></p>
