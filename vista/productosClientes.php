@@ -53,7 +53,8 @@
 
 <body>
     <?php
-    if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes') {
+    if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes')
+     {
     ?><script>
             
           Swal.fire({
@@ -241,7 +242,7 @@
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Cantidad</label>
                                                     <br>
-                                                    <input type="number" name="cantidadComprar" id="" placeholder="escribe la cantidad que deseas comprar...">
+                                                    <input type="number" min="1" name="cantidadComprar" id="" placeholder="escribe la cantidad que deseas comprar...">
                                                     <input class="form-control" type="hidden" aria-describedby="emailHelp" name="id_producto" value="<?php echo $fila['id_producto'] ?>">
                                                     <input type="hidden" class="form-control" id="existencia_producto" name="existencia_producto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
                                                 </div>

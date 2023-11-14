@@ -95,7 +95,7 @@ $stmt5->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
 $stmt5->execute();
 
 
-header("controlador/productosClientes.php");
+header("Location: ../vista/productosClientes.php");
         } catch (PDOException $e) {
             // Manejo de errores en caso de que ocurra una excepción.
             echo "Error: " . $e->getMessage();
