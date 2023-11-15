@@ -56,13 +56,14 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
-                Feliz</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span> Menu
-            </button>
-            <div class="collapse navbar-collapse" id="ftco-nav">
+        <div class="container-fluid">
+            <div class="col-2 d-flex justify-content-center"><a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
+                    Feliz</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-bars"></span> Menu
+                </button>
+            </div>
+            <div class="col-5 d-flex justify-content-center collapse navbar-collapse" id="ftco-nav">
                 <?php if ($_SESSION['rol_usuario'] == 'administrador') { ?>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
@@ -85,13 +86,22 @@
                 <?php if ($_SESSION['rol_usuario'] == 'empleado') { ?>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
-                        <li class="nav-item active"><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
+                        <li class="nav-item active "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                         <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                         <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
                         <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                     </ul>
                 <?php } ?>
             </div>
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i>
+                        <?php echo $_SESSION["nombreUsuario"] ?> </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../controlador/cerrarSesion.php">Cerrar Sesión </a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
     <!-- END nav -->
@@ -130,30 +140,13 @@
                                 <form action="../controlador/agregarProducto.php" method="post">
                                     <!-- <input name="id" value="" type="hiddennn"> -->
 
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Imagen Producto URL</label>
-                                        <input type="text" class="form-control" id="urlImagen" name="urlImagen">
-                                    </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Nombre de producto</label>
                                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Existencias</label>
-                                        <input type="number" class="form-control" id="existenciaProducto" name="existenciaProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Tipo</label>
-                                        <input type="text" class="form-control" id="tipoProducto" name="tipoProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Descripcion</label>
-                                        <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Precio</label>
-                                        <input type="text" class="form-control" id="precioProducto" name="precioProducto">
+                                        <label for="exampleInputEmail1" class="form-label">Imagen Producto URL</label>
+                                        <input type="text" class="form-control" id="urlImagen" name="urlImagen">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Estado Producto</label>
@@ -163,6 +156,25 @@
 
                                         </select>
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Tipo</label>
+                                        <input type="text" class="form-control" id="tipoProducto" name="tipoProducto">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Existencias</label>
+                                        <input type="number" class="form-control" min="1" id="existenciaProducto" name="existenciaProducto">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Descripcion</label>
+                                        <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Precio</label>
+                                        <input type="text" class="form-control" min="1" id="precioProducto" name="precioProducto">
+                                    </div>
+
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                         <input type="submit" value="Guardar" id="insertarSweet" class="btn btn-primary">
@@ -258,7 +270,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Existencia Producto</label>
-                                                        <input type="text" class="form-control" id="existenciaProducto" name="existenciaProducto" aria-describedby="emailHelp" min="1" value="<?php echo $fila['existencia_producto'] ?>">
+                                                        <input type="number" class="form-control" min="1" id="existenciaProducto" name="existenciaProducto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Tipo Producto</label>
