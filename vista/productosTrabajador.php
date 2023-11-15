@@ -255,7 +255,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Existencia Producto</label>
-                                                        <input type="text" class="form-control" id="existenciaProducto" name="existenciaProducto" aria-describedby="emailHelp" value="<?php echo $fila['existencia_producto'] ?>">
+                                                        <input type="text" class="form-control" id="existenciaProducto" name="existenciaProducto" aria-describedby="emailHelp" min="1" value="<?php echo $fila['existencia_producto'] ?>">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Tipo Producto</label>
@@ -271,7 +271,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Precio Producto</label>
-                                                        <input type="text" class="form-control" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
+                                                        <input type="text" class="form-control" min="1" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
 
 
