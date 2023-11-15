@@ -56,6 +56,7 @@ error_reporting(0);
                                         <h4 class="text-danger">Contraseña o Correo incorrecto</h4>
                                     </div>
                                 <?php
+                                    unset($_SESSION["errorLogin"]);
                                 }  ?>
 
 
