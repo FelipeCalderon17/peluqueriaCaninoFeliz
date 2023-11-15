@@ -1,11 +1,12 @@
 <!-- <?PHP
         //session_start();
         //require_once '../modelo/MySQL.php';
-        try {
-            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
-        } catch (PDOException $e) {
-            die("Error de conexión a la base de datos: " . $e->getMessage());
-        }
+        if ($_SESSION['login']) {
+            try {
+                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+            } catch (PDOException $e) {
+                die("Error de conexión a la base de datos: " . $e->getMessage());
+            }
 
             // Configurar el manejo de errores y excepciones.
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -215,11 +216,11 @@
                                         <li class="list-group-item" style="color:green">Precio : <?php echo $fila['precio_producto'] ?></li>
                                     </ul>
                                     <div class="card-body">
-                                       
 
-                                     
 
-                                        
+
+
+
 
 
                                         <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarProducto<?php echo $fila['id_producto'] ?>">
@@ -273,10 +274,10 @@
                                                         <input type="text" class="form-control" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
 
-                                                    
 
 
-                                    
+
+
 
 
 
@@ -284,9 +285,9 @@
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto']?>" class="btn btn-primary">Enviar</button>
+                                                    <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto'] ?>" class="btn btn-primary">Enviar</button>
 
-                                                   
+
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                                 </div>
                                             </form>
@@ -294,20 +295,20 @@
                                     </div>
                                 </div>
                             </div>
-                                                      <script>
-                                                        document.getElementById('actualizarSweet<?php echo $fila['id_producto']?>').addEventListener('click', function() {
-                                                            
-                                                            Swal.fire({
-                                                                icon: 'success',
-                                                                title: 'Confirmado',
-                                                                text: 'Actualizado Correctamente!',
-                                                            })
-                                                        });
-                                                    </script>
+                            <script>
+                                document.getElementById('actualizarSweet<?php echo $fila['id_producto'] ?>').addEventListener('click', function() {
+
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Confirmado',
+                                        text: 'Actualizado Correctamente!',
+                                    })
+                                });
+                            </script>
                         <?php
                         }
                         ?>
- 
+
 
                     </div>
                 </div>
@@ -408,3 +409,4 @@
         } else {
             header("Location: ./index.php");
         }
+?>
