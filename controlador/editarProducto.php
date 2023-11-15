@@ -10,9 +10,9 @@ if (
     isset($_POST['descripcionProducto']) && !empty($_POST['descripcionProducto']) &&
     isset($_POST['precio_producto']) && !empty($_POST['precio_producto'])
 )
-$id = $_POST['id_producto'];
+    $id = $_POST['id_producto'];
 $nombreProducto = $_POST['nombreProducto'];
-$urlImagen= $_POST['urlImagen'];
+$urlImagen = $_POST['urlImagen'];
 $estadoProducto = $_POST['estadoProducto'];
 $tipoProducto = $_POST['tipoProducto'];
 $existenciaProducto = $_POST['existenciaProducto'];
@@ -41,7 +41,6 @@ $stmt->execute();
 
 // Captura los datos de la consulta, captura una sola fila
 $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 header("Location: ../vista/productosTrabajador.php");
 
 // Paso 6: Cerrar la conexión a la base de datos.

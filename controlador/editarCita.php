@@ -40,7 +40,8 @@ if (
         $stmt2->bindParam(':id_cita', $idCita, PDO::PARAM_STR);
         $stmt2->execute();
     }
+    $_SESSION['editarCita'] = "OK";
     header("Location: ../vista/citasyServicios.php");
 } else {
-    echo "malo";
+    $_SESSION['errorEditar'] = "OK";
 }

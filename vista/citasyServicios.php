@@ -1,7 +1,18 @@
 <?php
 session_start();
 if ($_SESSION['login']) {
-
+    if (isset($_SESSION['errorCita'])) {
+        $error = $_SESSION['errorCita'];
+    }
+    if (isset($_SESSION['cita'])) {
+        $cita = $_SESSION['cita'];
+    }
+    if (isset($_SESSION['editarCita'])) {
+        $editar = $_SESSION['editarCita'];
+    }
+    if (isset($_SESSION['errorEditar'])) {
+        $errorEditar = $_SESSION['errorEditar'];
+    }
     try {
         $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", '');
     } catch (PDOException $e) {
@@ -43,7 +54,7 @@ if ($_SESSION['login']) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
         <link rel="stylesheet" href="css/animate.css">
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <link rel="stylesheet" href="css/magnific-popup.css">
@@ -57,8 +68,54 @@ if ($_SESSION['login']) {
     </head>
 
     <body>
-
-
+        <?php
+        if (!empty($error) && $error == 'Error') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "No has seleccionado ningun servicio",
+                });
+            </script> <?php
+                        unset($_SESSION['errorCita']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorEditar) && $errorEditar == 'OK') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Error editando la cita",
+                });
+            </script> <?php
+                        unset($_SESSION['errorEditar']);
+                    }
+                        ?>
+        <?php
+        if (!empty($cita) && $cita == 'OK') {
+        ?><script>
+                Swal.fire({
+                    title: "Buen Trabajo!",
+                    text: "Cita agendada",
+                    icon: "success"
+                });
+            </script> <?php
+                        unset($_SESSION['cita']);
+                    }
+                        ?>
+        <?php
+        if (!empty($editar) && $editar == 'OK') {
+        ?><script>
+                Swal.fire({
+                    title: "Buen Trabajo!",
+                    text: "Cita editada correctamente",
+                    icon: "success"
+                });
+            </script> <?php
+                        unset($_SESSION['editarCita']);
+                    }
+                        ?>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
                 <a class="navbar-brand" href="inicio.html"><span class="flaticon-pawprint-1 mr-2"></span>Canino
