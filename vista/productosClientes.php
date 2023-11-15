@@ -1,21 +1,22 @@
 <!-- <?PHP
         session_start();
-        //require_once '../modelo/MySQL.php';
-        try {
-            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
-        } catch (PDOException $e) {
-            die("Error de conexión a la base de datos: " . $e->getMessage());
-        }
+        if ($_SESSION['login']) {
+            //require_once '../modelo/MySQL.php';
+            try {
+                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+            } catch (PDOException $e) {
+                die("Error de conexión a la base de datos: " . $e->getMessage());
+            }
 
-        // Configurar el manejo de errores y excepciones.
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Configurar el manejo de errores y excepciones.
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-        $stmt = $pdo->prepare("SELECT * FROM producto");
+            // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+            $stmt = $pdo->prepare("SELECT * FROM producto");
 
-        // Paso 4: Ejecutar la consulta preparada.
-        $stmt->execute();
-        $existenciaProducto = $_POST['id_producto'];
+            // Paso 4: Ejecutar la consulta preparada.
+            $stmt->execute();
+            $existenciaProducto = $_POST['id_producto'];
         ?> -->
 
 
@@ -51,7 +52,7 @@
 
 <body>
     <?php
-    if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes') {
+            if (isset($_SESSION['compra']) && $_SESSION['compra'] == 'No hay existencias suficientes') {
     ?><script>
             alert("No puede comprar");
         </script> <?php
@@ -80,6 +81,7 @@
                         <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                         <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
                         <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                        <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
                     </ul>
                 <?php } ?>
                 <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -245,22 +247,6 @@
                         }
                         ?>
 
-
-                        TODO:MODAL
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -356,3 +342,7 @@
 </body>
 
 </html>
+<?php
+        } else {
+            header("Location: ./index.php");
+        }

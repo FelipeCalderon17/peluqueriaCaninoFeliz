@@ -1,20 +1,22 @@
 <!-- <?PHP
-        //session_start();
-        //require_once '../modelo/MySQL.php';
-        try {
-            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
-        } catch (PDOException $e) {
-            die("Error de conexión a la base de datos: " . $e->getMessage());
-        }
+        session_start();
+        if ($_SESSION['login']) {
+            //session_start();
+            //require_once '../modelo/MySQL.php';
+            try {
+                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+            } catch (PDOException $e) {
+                die("Error de conexión a la base de datos: " . $e->getMessage());
+            }
 
-        // Configurar el manejo de errores y excepciones.
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Configurar el manejo de errores y excepciones.
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-        $stmt = $pdo->prepare("SELECT * FROM producto");
+            // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+            $stmt = $pdo->prepare("SELECT * FROM producto");
 
-        // Paso 4: Ejecutar la consulta preparada.
-        $stmt->execute();
+            // Paso 4: Ejecutar la consulta preparada.
+            $stmt->execute();
 
         ?> -->
 
@@ -69,6 +71,7 @@
                         <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                         <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
                         <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                        <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>Ñ
                     </ul>
                 <?php } ?>
                 <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -406,3 +409,7 @@
 </body>
 
 </html>
+<?php
+        } else {
+            header("Location: ./index.php");
+        }
