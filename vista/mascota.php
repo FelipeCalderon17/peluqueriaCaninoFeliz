@@ -32,13 +32,14 @@ if ($_SESSION['login']) {
 
 
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
-                <a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
-                    Feliz</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="fa fa-bars"></span> Menu
-                </button>
-                <div class="collapse navbar-collapse" id="ftco-nav">
+            <div class="container-fluid">
+                <div class="col-2 d-flex justify-content-center"><a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
+                        Feliz</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fa fa-bars"></span> Menu
+                    </button>
+                </div>
+                <div class="col-5 d-flex justify-content-center collapse navbar-collapse" id="ftco-nav">
                     <?php if ($_SESSION['rol_usuario'] == 'administrador') { ?>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
@@ -68,6 +69,15 @@ if ($_SESSION['login']) {
                         </ul>
                     <?php } ?>
                 </div>
+                <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i>
+                            <?php echo $_SESSION["nombreUsuario"] ?> </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../controlador/cerrarSesion.php">Cerrar Sesión </a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </nav>
         <!-- END nav -->
@@ -111,40 +121,8 @@ if ($_SESSION['login']) {
                                         <textarea name="requisitos_especiales" id="requisitos_especiales" rows="5" class="form-control" style="resize: none;"></textarea>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Dueño</label>
-                                        <select class="form-select w-100" name="usuario_id_usuario" id="usuario_id_usuario" aria-label="Default select example">
+                                        <input type="text" class="form-control" name="usuario_id_usuario" id="usuario_id_usuario" value="<?php echo $_SESSION["idUsuario"] ?>" hidden>
 
-                                            <?php
-                                            try {
-                                                // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-                                                $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
-
-                                                // Configurar el manejo de errores y excepciones.
-                                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                                // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                                                $stmt = $pdo->prepare("SELECT * FROM usuario where rol_usuario = 'cliente'");
-
-                                                // Paso 4: Ejecutar la consulta preparada.
-                                                $stmt->execute();
-
-                                                // Paso 5: Recuperar resultados.
-                                                while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                                    <option value="<?php echo $fila['id_usuario'] ?>"><?php echo $fila['nombre_usuario'] ?></option>
-
-                                            <?php
-                                                }
-
-                                                // Paso 6: Cerrar la conexión a la base de datos.
-                                                $pdo = null;
-                                            } catch (PDOException $e) {
-                                                // Manejo de errores en caso de que ocurra una excepción.
-                                                echo "Error: " . $e->getMessage();
-                                            }
-                                            ?>
-
-                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Enviar</button>
                                 </form>
