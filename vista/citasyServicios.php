@@ -13,8 +13,15 @@ if ($_SESSION['login']) {
     if (isset($_SESSION['errorEditar'])) {
         $errorEditar = $_SESSION['errorEditar'];
     }
+    if (isset($_SESSION['errorFechaCogida'])) {
+        $errorFechaCogida = $_SESSION['errorFechaCogida'];
+    }
+    if (isset($_SESSION['errorFechaAnterior'])) {
+        $errorFechaAnterior = $_SESSION['errorFechaAnterior'];
+    }
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
     } catch (PDOException $e) {
         die("Error de conexión a la base de datos: " . $e->getMessage());
     }
@@ -114,6 +121,30 @@ if ($_SESSION['login']) {
                 });
             </script> <?php
                         unset($_SESSION['editarCita']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorFechaCogida) && $errorFechaCogida == 'ERROR') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La fecha que escogiste no esta disponible",
+                });
+            </script> <?php
+                        unset($_SESSION['errorFechaCogida']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorFechaAnterior) && $errorFechaAnterior == 'ERROR') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La fecha que escogiste es antigua a la de hoy",
+                });
+            </script> <?php
+                        unset($_SESSION['errorFechaAnterior']);
                     }
                         ?>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">

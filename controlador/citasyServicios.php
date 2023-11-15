@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('America/Bogota');
 if (
     isset($_POST['idMascota']) && !empty($_POST['idMascota']) &&
     isset($_POST['fechaCita']) && !empty($_POST['fechaCita']) &&
@@ -10,9 +11,28 @@ if (
     $servicios = $_POST['checkServicio'];
     $lenghtServicios = count($servicios);
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
     } catch (PDOException $e) {
         die("Error de conexión a la base de datos: " . $e->getMessage());
+    }
+    $sql4 = "SELECT fecha_cita from cita";
+    $stmt4 = $pdo->prepare($sql4);
+    $stmt4->execute();
+    $fila4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($fila4 as $fechaC) {
+        $fechaComp = str_replace("T", " ", $fecha);
+        $fechaComp = $fechaComp . ":00";
+        /* echo $fechaComp;
+        echo $fechaC['fecha_cita']; */
+        /* echo date("Y-m-d H:i:s"); */
+        if ($fechaC['fecha_cita'] == $fechaComp) {
+            $_SESSION['errorFechaCogida'] = "ERROR";
+            header("Location: ../vista/citasyServicios.php");
+        } else if ($fecha < date("Y-m-d H:i:s")) {
+            $_SESSION['errorFechaAnterior'] = "ERROR";
+            header("Location: ../vista/citasyServicios.php");
+        }
     }
     if ($lenghtServicios > 0) {
         // Consulta preparada para evitar inyección de SQL
@@ -40,8 +60,9 @@ if (
             $stmt2->bindParam(':id_cita', $max, PDO::PARAM_STR);
             $stmt2->execute();
         }
+        // Captura los datos de la consulta, captura una sola fila
         $_SESSION['cita'] = "OK";
-        header("Location: ../vista/citasyServicios.php");
+        /* header("Location: ../vista/citasyServicios.php"); */
     } else {
         $_SESSION['errorCita'] = "Error";
     }
