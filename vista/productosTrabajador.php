@@ -1,9 +1,9 @@
 <!-- <?PHP
-        //session_start();
+        session_start();
         //require_once '../modelo/MySQL.php';
         if ($_SESSION['login']) {
             try {
-                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+                $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
             } catch (PDOException $e) {
                 die("Error de conexión a la base de datos: " . $e->getMessage());
             }
@@ -70,7 +70,7 @@
                         <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                         <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
                         <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
-                        <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>Ñ
+                        <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
                     </ul>
                 <?php } ?>
                 <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -407,6 +407,7 @@
 </html>
 <?php
         } else {
-            header("Location: ./index.php");
+            /* header("Location: ./index.php"); */
+            echo "error";
         }
 ?>

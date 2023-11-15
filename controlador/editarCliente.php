@@ -2,7 +2,7 @@
 try {
     require_once '../modelo/mycript.php';
     // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-    $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
 
 
     // Configurar el manejo de errores y excepciones.

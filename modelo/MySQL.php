@@ -2,9 +2,9 @@
 class MySQL
 {
     private $ipServidor = "localhost";
-    private $usuarioBase = 'root';
-    private $databaseName = 'peluqueria_canino_feliz';
-    private $contrasena = '';
+    private $usuarioBase = 'id21435812_calde17';
+    private $databaseName = 'id21435812_peluqueria_canino_feliz';
+    private $contrasena = 'Bruno1702!';
     private $conexion;
     private $resultadoConsulta;
 

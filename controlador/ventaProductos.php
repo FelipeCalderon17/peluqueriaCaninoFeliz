@@ -24,25 +24,25 @@ if (
         $_SESSION['compra'] = 'OK';
         try {
             // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+            $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
 
             // Configurar el manejo de errores y excepciones.
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // Paso 2: Preparar una consulta SQL usando consultas preparadas.
             // Consulta preparada para evitar inyección de SQL
-            
-            $consulta="SELECT ventas_producto from producto WHERE id_producto = $idProducto";
+
+            $consulta = "SELECT ventas_producto from producto WHERE id_producto = $idProducto";
             $stmt2 = $pdo->prepare($consulta);
             $stmt2->execute();
 
-           
+
 
             // Captura los datos de la consulta, captura una sola fila
             $fila = $stmt2->fetch(PDO::FETCH_ASSOC);
             $maxVentas = $fila['ventas_producto'];
- 
-            $totalVentas=$maxVentas+$cantidadComprar;
+
+            $totalVentas = $maxVentas + $cantidadComprar;
             $sql = "UPDATE producto set existencia_producto=:totalProductos,fecha_venta=:fechahoy,ventas_producto=:totalVentas WHERE id_producto = :idProducto";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
@@ -52,50 +52,50 @@ if (
             //$stmt->bindParam(':ventasProducto', $ventasProducto, PDO::PARAM_STR);
             $stmt->execute();
 
-           
+
 
             while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $_SESSION["idUsuario"] = $fila['id_usuario'];
             }
-           $id=$_SESSION["idUsuario"];
-        //    echo $id;
-
-            
-$sqlTablaVenta= ("INSERT INTO venta(usuario_id_usuario,fecha_venta) VALUES (:id, :fechahoy )");
-$stmt3 = $pdo->prepare($sqlTablaVenta);
-$stmt3->bindParam(':id', $id, PDO::PARAM_STR);
-$stmt3->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
-$stmt3->execute();
+            $id = $_SESSION["idUsuario"];
+            //    echo $id;
 
 
-
-
-$consultaIDVENTA="SELECT id_venta from venta WHERE usuario_id_usuario= $id";
-$stmt4 = $pdo->prepare($consultaIDVENTA);
-$stmt4->execute();
-// Captura los datos de la consulta, captura una sola fila
-$fila4 = $stmt4->fetch(PDO::FETCH_ASSOC);
-$id_venta= $fila4['id_venta'];
-
-$idventa=$id_venta;
-
-// echo $idventa;
+            $sqlTablaVenta = ("INSERT INTO venta(usuario_id_usuario,fecha_venta) VALUES (:id, :fechahoy )");
+            $stmt3 = $pdo->prepare($sqlTablaVenta);
+            $stmt3->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt3->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
+            $stmt3->execute();
 
 
 
 
-$sqlTablaHasProductos= ("INSERT INTO producto_has_venta(producto_id_producto,Venta_id_venta,cantidad_producto,fecha) VALUES (:idProducto,:idventa,:cantidadComprar,:fechahoy)");
-$stmt5 = $pdo->prepare($sqlTablaHasProductos);
-$stmt5->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
-// echo $idProducto;
-$stmt5->bindParam(':idventa', $idventa, PDO::PARAM_STR);
-$stmt5->bindParam(':cantidadComprar', $cantidadComprar, PDO::PARAM_STR);
-//echo $cantidadComprar;
-$stmt5->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
-$stmt5->execute();
+            $consultaIDVENTA = "SELECT id_venta from venta WHERE usuario_id_usuario= $id";
+            $stmt4 = $pdo->prepare($consultaIDVENTA);
+            $stmt4->execute();
+            // Captura los datos de la consulta, captura una sola fila
+            $fila4 = $stmt4->fetch(PDO::FETCH_ASSOC);
+            $id_venta = $fila4['id_venta'];
+
+            $idventa = $id_venta;
+
+            // echo $idventa;
 
 
-header("Location: ../vista/productosClientes.php");
+
+
+            $sqlTablaHasProductos = ("INSERT INTO producto_has_venta(producto_id_producto,Venta_id_venta,cantidad_producto,fecha) VALUES (:idProducto,:idventa,:cantidadComprar,:fechahoy)");
+            $stmt5 = $pdo->prepare($sqlTablaHasProductos);
+            $stmt5->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
+            // echo $idProducto;
+            $stmt5->bindParam(':idventa', $idventa, PDO::PARAM_STR);
+            $stmt5->bindParam(':cantidadComprar', $cantidadComprar, PDO::PARAM_STR);
+            //echo $cantidadComprar;
+            $stmt5->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
+            $stmt5->execute();
+
+
+            header("Location: ../vista/productosClientes.php");
         } catch (PDOException $e) {
             // Manejo de errores en caso de que ocurra una excepción.
             echo "Error: " . $e->getMessage();
@@ -103,7 +103,7 @@ header("Location: ../vista/productosClientes.php");
     }
 } else {
     $_SESSION['compra'] = 'No hay existencias suficientes';
-        header("Location: ../vista/productosClientes.php");
+    header("Location: ../vista/productosClientes.php");
 }
 
 ?>
