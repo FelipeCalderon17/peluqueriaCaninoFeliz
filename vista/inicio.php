@@ -34,13 +34,14 @@ if ($_SESSION['login']) {
 
 
 		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-			<div class="container">
-				<a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
-					Feliz</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
+			<div class="container-fluid">
+				<div class="col-2 d-flex justify-content-center"><a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
+						Feliz</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="fa fa-bars"></span> Menu
+					</button>
+				</div>
+				<div class="col-5 d-flex justify-content-center collapse navbar-collapse" id="ftco-nav">
 					<?php if ($_SESSION['rol_usuario'] == 'administrador') { ?>
 						<ul class="navbar-nav ml-auto">
 							<li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
@@ -49,6 +50,7 @@ if ($_SESSION['login']) {
 							<li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
 							<li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
 							<li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
+							<li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
 						</ul>
 					<?php } ?>
 					<?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -56,6 +58,7 @@ if ($_SESSION['login']) {
 							<li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
 							<li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
 							<li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+							<li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
 						</ul>
 					<?php } ?>
 					<?php if ($_SESSION['rol_usuario'] == 'empleado') { ?>
@@ -64,6 +67,7 @@ if ($_SESSION['login']) {
 							<li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
 							<li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
 							<li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+							<li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
 						</ul>
 					<?php } ?>
 				</div>
