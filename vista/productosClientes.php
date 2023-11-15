@@ -189,11 +189,11 @@
         </div>
     </div>
 
-    <section class="ftco-section ftco-no-pt ftco-no-pb">
-        <div class="container">
-            <div class="row d-flex">
+    <section id="productos" class="ftco-section ftco-no-pt ftco-no-pb">
+        <div class="container-fluid">
+            <div class="row d-flex no-gutters">
 
-                <div class="col">
+                <div class="col-md-12 pl-md-5 py-md-5">
                     <div class="heading-section pt-md-5">
                         <h2 class="mb-4 text-center">Productos</h2>
                     </div>
