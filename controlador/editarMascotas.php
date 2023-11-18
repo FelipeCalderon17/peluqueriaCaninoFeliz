@@ -1,5 +1,11 @@
 <?php
 session_start();
+$_POST['id_mascotaEdit'] = trim($_POST['id_mascotaEdit']);
+$_POST['nombre_mascotaEdit'] = trim($_POST['nombre_mascotaEdit']);
+$_POST['tipo_mascotaEdit'] = trim($_POST['tipo_mascotaEdit']);
+$_POST['razaEdit'] = trim($_POST['razaEdit']);
+$_POST['requisitos_especialesEdit'] = trim($_POST['requisitos_especialesEdit']);
+$_POST['usuario_id_usuarioEdit'] = trim($_POST['usuario_id_usuarioEdit']);
 if (
     isset($_POST['id_mascotaEdit']) && !empty($_POST['id_mascotaEdit']) &&
     isset($_POST['nombre_mascotaEdit']) && !empty($_POST['nombre_mascotaEdit']) &&

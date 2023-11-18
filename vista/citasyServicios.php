@@ -25,6 +25,12 @@ if ($_SESSION['login']) {
     if (isset($_SESSION['errorEliminar'])) {
         $eliminarError = $_SESSION['errorEliminar'];
     }
+    if (isset($_SESSION['errorFechaAnteriorEditar'])) {
+        $errorFechaAnteriorEditar = $_SESSION['errorFechaAnteriorEditar'];
+    }
+    if (isset($_SESSION['errorFechaCogidaEditar'])) {
+        $errorFechaCogidaEditar = $_SESSION['errorFechaCogidaEditar'];
+    }
     try {
         //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
         $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
@@ -175,6 +181,30 @@ if ($_SESSION['login']) {
                 });
             </script> <?php
                         unset($_SESSION['errorEliminar']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorFechaAnteriorEditar) && $errorFechaAnteriorEditar == 'ERROR') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La fecha que escogiste es anterior",
+                });
+            </script> <?php
+                        unset($_SESSION['errorFechaAnteriorEditar']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorFechaCogidaEditar) && $errorFechaCogidaEditar == 'ERROR') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La fecha que escogiste no esta disponible",
+                });
+            </script> <?php
+                        unset($_SESSION['errorFechaCogidaEditar']);
                     }
                         ?>
 

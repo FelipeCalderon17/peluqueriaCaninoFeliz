@@ -1,6 +1,9 @@
 <?php
 //Controla el inicio de sesión
 session_start();
+$_POST['nombre_usuario'] = trim($_POST['nombre_usuario']);
+$_POST['correo_usuario'] = trim($_POST['correo_usuario']);
+$_POST['pass_usuario'] = trim($_POST['pass_usuario']);
 //Se verifica que existan datos en el formulario
 if (
     isset($_POST['nombre_usuario']) && !empty($_POST['nombre_usuario']) &&

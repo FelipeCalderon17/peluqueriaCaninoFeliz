@@ -485,7 +485,6 @@
 </html>
 <?php
         } else {
-            /* header("Location: ./index.php"); */
-            echo "error";
+            header("Location: ./index.php");
         }
 ?>

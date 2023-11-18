@@ -1,5 +1,9 @@
 <?php
 session_start();
+$_POST['nombre_usuario'] = trim($_POST['nombre_usuario']);
+$_POST['correo_usuario'] = trim($_POST['correo_usuario']);
+$_POST['pass_usuario'] = trim($_POST['pass_usuario']);
+$_POST['id_usuario'] = trim($_POST['id_usuario']);
 if (
     isset($_POST['nombre_usuario']) && !empty($_POST['nombre_usuario']) &&
     isset($_POST['correo_usuario']) && !empty($_POST['correo_usuario']) &&

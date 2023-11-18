@@ -221,8 +221,8 @@ if ($_SESSION['login']) {
                                                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                                     // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                                                    $stmt = $pdo->prepare("SELECT * FROM mascota ");
-
+                                                    $stmt = $pdo->prepare("SELECT * FROM mascota where usuario_id_usuario=:idUsuario");
+                                                    $stmt->bindParam(":idUsuario", $_SESSION['idUsuario'], PDO::PARAM_STR);
                                                     // Paso 4: Ejecutar la consulta preparada.
                                                     $stmt->execute();
 

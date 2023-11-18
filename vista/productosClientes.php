@@ -452,6 +452,5 @@
 </html>
 <?php
         } else {
-            /* header("Location: ./index.php"); */
-            echo "malo";
+            header("Location: ./index.php");
         }

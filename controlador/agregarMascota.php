@@ -1,5 +1,10 @@
 <?php
 session_start();
+$_POST['nombre_mascota'] = trim($_POST['nombre_mascota']);
+$_POST['tipo_mascota'] = trim($_POST['tipo_mascota']);
+$_POST['raza'] = trim($_POST['raza']);
+$_POST['requisitos_especiales'] = trim($_POST['requisitos_especiales']);
+$_POST['usuario_id_usuario'] = trim($_POST['usuario_id_usuario']);
 if (
     isset($_POST['nombre_mascota']) && !empty($_POST['nombre_mascota']) &&
     isset($_POST['tipo_mascota']) && !empty($_POST['tipo_mascota']) &&
