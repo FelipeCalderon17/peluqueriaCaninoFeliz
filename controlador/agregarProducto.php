@@ -55,10 +55,11 @@ if (
 
     // $_SESSION['mensaje'] = "La Pelicula Fue Agregada Correctamente";
     // $_SESSION['mensajeTitu'] = "Pelicula Agregada";
-    header("Location:../vista/productosClientes.php");
+    $_SESSION['agregar'] = "OK";
+    header("Location:../vista/productosTrabajador.php");
 } else {
-    // $_SESSION['mensaje'] = "No deje Campos Vacios";
-    // $_SESSION['mensajeTitu'] = "Error al Agregar";
-    header("Location:../vista/error.php");
+    $_SESSION['errorAgregar'] = "OK";
+
+    header("Location:../vista/productosTrabajador.php");
 }
 //require_once '../modelo/MySQL.php';

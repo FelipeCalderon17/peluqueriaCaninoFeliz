@@ -2,6 +2,12 @@
         session_start();
         //require_once '../modelo/MySQL.php';
         if ($_SESSION['login']) {
+            if (isset($_SESSION['agregar']) && !empty($_SESSION['agregar'])) {
+                $agregar = $_SESSION['agregar'];
+            }
+            if (isset($_SESSION['errorAgregar']) && !empty($_SESSION['errorAgregar'])) {
+                $errorAgregar = $_SESSION['errorAgregar'];
+            }
             try {
                 $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
             } catch (PDOException $e) {
@@ -53,7 +59,63 @@
 </head>
 
 <body>
+    <?php
+            if (!empty($agregar) && $agregar == "OK") {
+    ?>
+        <script>
+            {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Confirmado',
+                    text: 'Agregado Correctamente!',
 
+                })
+            };
+        </script>
+    <?php
+                unset($_SESSION['agregar']);
+            }
+    ?>
+
+
+
+    <?php
+            if (!empty($agregar) && $agregar == "EDITAR") {
+    ?>
+        <script>
+            {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Confirmado',
+                    text: 'Editado Correctamente!',
+
+                })
+            };
+        </script>
+    <?php
+                unset($_SESSION['agregar']);
+            }
+    ?>
+
+
+
+    <?php
+            if (!empty($errorAgregar) && $errorAgregar == "OK") {
+    ?>
+        <script>
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'No se pudo agregar',
+                    text: 'No dejar datos vacios!',
+
+                })
+            };
+        </script>
+    <?php
+                unset($_SESSION['errorAgregar']);
+            }
+    ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container-fluid">
@@ -167,22 +229,25 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" value="Guardar" id="insertarSweet" class="btn btn-primary">
+                                        <button type="submit" value="guardar" id="insertarSweet" class="btn btn-primary">Enviar</button>
+                                        <!-- <script>
+                                            const existenciaProducto = document.getElementById("existenciaProducto").value
+                                            if (existenciaProducto >= 0) {
+                                                document.getElementById('insertarSweet').addEventListener('click', function() {
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Confirmado',
+                                                        text: 'Agregado Correctamente!',
 
+                                                    })
+                                                });
 
-                                        <script>
-                                            document.getElementById('insertarSweet').addEventListener('click', function() {
-                                                Swal.fire({
-                                                    icon: 'success',
-                                                    title: 'Confirmado',
-                                                    text: 'Agregado Correctamente!',
-
-                                                })
-                                            });
-                                        </script>
+                                            }
+                                        </script> -->
                                     </div>
 
-                                    <!-- <button type="submit" class="btn btn-primary">Guardar</button> -->
+
+
                                 </form>
                             </div>
 
@@ -279,29 +344,20 @@
                                                         <label for="exampleInputEmail1" class="form-label">Precio Producto</label>
                                                         <input type="text" class="form-control" min="1" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto'] ?>" class="btn btn-primary">Enviar</button>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto'] ?>" class="btn btn-primary">Enviar</button>
 
 
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    </div>
                                                 </div>
+
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <script>
-                                document.getElementById('actualizarSweet<?php echo $fila['id_producto'] ?>').addEventListener('click', function() {
-
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Confirmado',
-                                        text: 'Actualizado Correctamente!',
-                                    })
-                                });
-                            </script>
                         <?php
                         }
                         ?>

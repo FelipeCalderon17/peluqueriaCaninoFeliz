@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if (
     isset($_POST['nombreProducto']) && !empty($_POST['nombreProducto']) &&
     isset($_POST['urlImagen']) && !empty($_POST['urlImagen']) &&
@@ -26,6 +26,7 @@ try {
 } catch (PDOException $e) {
     die("Error de conexión a la base de datos: " . $e->getMessage());
 }
+
 $sql = "UPDATE producto SET nombre_producto = :nombreProducto, existencia_producto=:existenciaProducto, tipo_producto =:tipoProducto,estado_producto= :estadoProducto, descripcion_producto=:descripcionProducto,precio_producto=:precio_producto,urlImagen=:urlImagen,fecha_venta=:fechahoy WHERE id_producto = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(":id", $id, PDO::PARAM_STR);
@@ -41,7 +42,10 @@ $stmt->execute();
 
 // Captura los datos de la consulta, captura una sola fila
 $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$_SESSION['agregar'] = "EDITAR";
 header("Location: ../vista/productosTrabajador.php");
+
+
 
 // Paso 6: Cerrar la conexión a la base de datos.
 $pdo = null;
