@@ -1,11 +1,18 @@
 <?php
 
 session_start();
-// Verificar si el usuario ha iniciado sesión y es un administrador
-if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) {
+if($_SESSION['login']){
+   if(isset($_SESSION['registroExito'])){
+    $Exito = $_SESSION['registroExito'];
+   } 
+   if(isset($_SESSION['erroRegistro'])){
+    $Error = $_SESSION['erroRegistro'];
+   }
+}
+
+
 
 ?>
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -14,13 +21,15 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+       
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
         <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="css/animate.css">
 
         <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -33,11 +42,47 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
 
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/style.css">
+        <!-- SweetAlert -->
+
+
+
 
 
     </head>
 
     <body>
+
+    <?php
+  
+    if(!empty($Exito) && $Exito == 'OK'){
+      ?>   <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'Inserción exitosa.',
+                    });
+            </script>;
+    
+    <?php
+        unset($_SESSION['registroExito']);
+}  
+    ?>
+    <?php
+  
+    if(!empty($Error) && $Error == 'errorCreado'){
+      ?>   <script>
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Error',
+                        text: 'El correo ya se encuentra en uso',
+                    });
+            </script>;
+    
+    <?php
+        unset($_SESSION['erroRegistro']);
+}  
+    ?>
+   
 
 
         <!-- INICIO nav -->
@@ -109,14 +154,14 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
                                     <div class="modal-body">
 
                                         <div class="col">
-                                            <form method="post" action="../controlador/agregarEmpleado.php">
+                                            <form method="post" action="../controlador/agregarEmpleado.php" onsubmit="return validarFormulario()" >
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Nombre Empleado</label>
                                                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="" name="nombreEmpleado">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="correoEmpleado">
+                                                    <input type="email" class="form-control" id="EmailValida" aria-describedby="emailHelp" name="correoEmpleado">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
@@ -140,13 +185,13 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
 
                                         </div>
 
-                                    </div>
-
-                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+                </div>
+
+            </div>
 
         </section>
 
@@ -177,91 +222,96 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            try {
-                                                // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-                                                $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+                                        <?php
+        
+                try {
+                    // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                    $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
 
-                                                // Configurar el manejo de errores y excepciones.
-                                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                    //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
 
-                                                // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                                                $stmt = $pdo->prepare("SELECT * FROM usuario WHERE rol_usuario = 'Empleado'");
+                    // Configurar el manejo de errores y excepciones.
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                                // Paso 4: Ejecutar la consulta preparada.
-                                                $stmt->execute();
+                    // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE rol_usuario = 'Empleado'");
 
-                                                // Paso 5: Recuperar resultados.
-                                                while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                                    <tr>
-                                                        <th scope="row"><?php echo $fila['id_usuario'] ?></th>
-                                                        <td><?php echo $fila['nombre_usuario'] ?></td>
-                                                        <td><?php echo $fila['correo_usuario'] ?></td>
-                                                        <td><?php echo $fila['rol_usuario'] ?></td>
-                                                        <td class="text-center">
-                                                            <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarEmpleado<?php echo $fila["id_usuario"] ?>">
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                    // Paso 4: Ejecutar la consulta preparada.
+                    $stmt->execute();
 
-                                                    <!-- INICIO MODAL EDITAR EMPLEADOS -->
-                                                    <div class="modal fade" id="editarEmpleado<?php echo $fila['id_usuario'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-scrollable">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Empleado</h1>
+                    // Paso 5: Recuperar resultados.
+                    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                        <tr>
+                            <th scope="row"><?php echo $fila['id_usuario'] ?></th>
+                            <td><?php echo $fila['nombre_usuario'] ?></td>
+                            <td><?php echo $fila['correo_usuario'] ?></td>
+                            <td><?php echo $fila['rol_usuario'] ?></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarEmpleado<?php echo $fila["id_usuario"] ?>">
+                                </button>
+                            </td>
+                        </tr>
 
-                                                                </div>
-                                                                <form method="post" action="../controlador/editarEmpleado.php">
-                                                                    <div class="modal-body">
+                        <!-- INICIO MODAL EDITAR EMPLEADOS -->
+                        <div class="modal fade" id="editarEmpleado<?php echo $fila['id_usuario'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Empleado</h1>
 
-                                                                        <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
-                                                                        <div class="mb-3">
-                                                                            <label for="exampleInputEmail1" class="form-label">Nombre Empleado</label>
-                                                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="" name="nombreEmpleado" value="<?php echo $fila['nombre_usuario'] ?>">
-                                                                        </div>
-                                                                        <div class="mb-3">
-                                                                            <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
-                                                                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="correoEmpleado" value="<?php echo $fila['correo_usuario'] ?>">
-                                                                        </div>
-                                                                        <div class="mb-3">
-                                                                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                                                            <input type="password" class="form-control" id="exampleInputPassword1" name="contraseña" value="<?php require_once '../modelo/mycript.php';
-                                                                                                                                                                            echo decrypt($fila['pass_usuario']) ?>">
-                                                                        </div>
-                                                                        <!-- <div class="mb-3">
-                                                                <label for="exampleInputPassword1" class="form-label">Rol</label>
-                                                                <select class="form-control form-select w-100" aria-label="Default select example" name="rol" value="<?php echo $fila['rol_usuario'] ?>">
-                                                                    <option selected disabled ></option>
-                                                                    <option>Empleado</option>
-                                                                </select>
-                                                            </div> -->
+                                    </div>
+                                    <form method="post" action="../controlador/editarEmpleado.php">
+                                        <div class="modal-body">
 
-                                                                        <!--  <button type="submit" class="btn btn-primary">Submit</button> -->
+                                            <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Nombre Empleado</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="" name="nombreEmpleado" value="<?php echo $fila['nombre_usuario'] ?>">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="correoEmpleado" value="<?php echo $fila['correo_usuario'] ?>">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword1" name="contraseña" value="<?php require_once '../modelo/mycript.php';
+                                                                                                                                                echo decrypt($fila['pass_usuario']) ?>">
+                                            </div>
+                                            <!-- <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Rol</label>
+                                    <select class="form-control form-select w-100" aria-label="Default select example" name="rol" value="<?php echo $fila['rol_usuario'] ?>">
+                                        <option selected disabled ></option>
+                                        <option>Empleado</option>
+                                    </select>
+                                </div> -->
 
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                                            <button type="submit" class="btn btn-primary">Editar</button>
-                                                                        </div>
+                                            <!--  <button type="submit" class="btn btn-primary">Submit</button> -->
 
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-primary">Editar</button>
+                                            </div>
 
-                                            <?php
-                                                    /* echo "idPelicula: " . $fila['idPelicula'] . ", nombrePelicula: " . $fila['nombrePelicula'] . ", fecha: " . $fila['fecha'] . "<br>"; */
-                                                }
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
-                                                // Paso 6: Cerrar la conexión a la base de datos.
-                                                $pdo = null;
-                                            } catch (PDOException $e) {
-                                                // Manejo de errores en caso de que ocurra una excepción.
-                                                echo "Error: " . $e->getMessage();
-                                            }
-                                            ?>
+                <?php
+                        /* echo "idPelicula: " . $fila['idPelicula'] . ", nombrePelicula: " . $fila['nombrePelicula'] . ", fecha: " . $fila['fecha'] . "<br>"; */
+                    }
+
+                    // Paso 6: Cerrar la conexión a la base de datos.
+                    $pdo = null;
+                } catch (PDOException $e) {
+                    // Manejo de errores en caso de que ocurra una excepción.
+                    echo "Error: " . $e->getMessage();
+                }
+                
+        ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -369,6 +419,42 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
             </svg></div>
 
 
+<?php
+if (isset($error)) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '$error',
+        });
+    </script>";
+}
+?>
+
+
+<script>
+    function validarFormulario() {
+        // Obtener el valor del campo de correo electrónico
+        var correo = document.getElementById('EmailValida').value;
+
+        // Validar el formato del correo electrónico
+        if (!/^.+@.+\..+$/.test(correo)) {
+            // Mostrar SweetAlert para correo inválido
+            Swal.fire({
+                icon: 'error',
+                title: 'Correo inválido',
+                text: 'Por favor, ingresa un correo electrónico válido.',
+            });
+            return false; // Evitar que el formulario se envíe
+        }
+
+        // Continuar con el envío del formulario si la validación es exitosa
+        return true;
+    }
+</script> 
+
+
+
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.1.min.js"></script>
         <script src="js/popper.min.js"></script>
@@ -387,19 +473,9 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
         <script src="js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+        
 
-
+    
     </body>
 
     </html>
-
-
-<?php
-} else {
-    // Redirigir a la página de inicio o mostrar un mensaje de error
-    header("Location: inicio.php");
-    exit();
-}
-
-
-?>
