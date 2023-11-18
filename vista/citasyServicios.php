@@ -13,8 +13,15 @@ if ($_SESSION['login']) {
     if (isset($_SESSION['errorEditar'])) {
         $errorEditar = $_SESSION['errorEditar'];
     }
+    if (isset($_SESSION['errorFechaCogida'])) {
+        $errorFechaCogida = $_SESSION['errorFechaCogida'];
+    }
+    if (isset($_SESSION['errorFechaAnterior'])) {
+        $errorFechaAnterior = $_SESSION['errorFechaAnterior'];
+    }
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
     } catch (PDOException $e) {
         die("Error de conexión a la base de datos: " . $e->getMessage());
     }
@@ -116,6 +123,30 @@ if ($_SESSION['login']) {
                         unset($_SESSION['editarCita']);
                     }
                         ?>
+        <?php
+        if (!empty($errorFechaCogida) && $errorFechaCogida == 'ERROR') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La fecha que escogiste no esta disponible",
+                });
+            </script> <?php
+                        unset($_SESSION['errorFechaCogida']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorFechaAnterior) && $errorFechaAnterior == 'ERROR') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La fecha que escogiste es antigua a la de hoy",
+                });
+            </script> <?php
+                        unset($_SESSION['errorFechaAnterior']);
+                    }
+                        ?>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
                 <a class="navbar-brand" href="inicio.html"><span class="flaticon-pawprint-1 mr-2"></span>Canino
@@ -126,27 +157,30 @@ if ($_SESSION['login']) {
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <?php if ($_SESSION['rol_usuario'] == 'administrador') { ?>
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                             <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                             <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
-                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item active"><a href="citasyServicios.php" class="nav-link">Citas</a></li>
                             <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
+                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                     <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                             <li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
-                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item active"><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                     <?php if ($_SESSION['rol_usuario'] == 'empleado') { ?>
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                             <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
-                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item active"><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                 </div>

@@ -39,16 +39,15 @@ if (
     //     header("Location:../vista/agregarPeliculas.php");
     // } else {
     // Consulta preparada para evitar inyección de SQL
-    $sql = "INSERT INTO producto (nombre_producto,estado_producto,tipo_producto,existencia_producto,descripcion_producto,precio_producto,urlImagen) VALUES(:nombreProducto,:estadoProducto,:tipoProducto,:existenciaProducto,:descripcionProducto,:precioProducto,:urlImagen)";
+    $sql = "INSERT INTO producto(nombre_producto,estado_producto,tipo_producto,existencia_producto,descripcion_producto,precio_producto,urlImagen) VALUES(:nombreProducto,:estadoProducto,:tipoProducto,:existenciaProducto,:descripcionProducto,:precioProducto,:urlImagen)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':nombreProducto', $nombreProducto, PDO::PARAM_STR);
     $stmt->bindParam(':estadoProducto', $estadoProducto, PDO::PARAM_STR);
     $stmt->bindParam(':tipoProducto', $tipoProducto, PDO::PARAM_STR);
     $stmt->bindParam(':existenciaProducto', $existenciaProducto, PDO::PARAM_STR);
-    $stmt->bindParam(':descripcionProducto', $existenciaProducto, PDO::PARAM_STR);
+    $stmt->bindParam(':descripcionProducto', $descripcionProducto, PDO::PARAM_STR);
     $stmt->bindParam(':precioProducto', $precioProducto, PDO::PARAM_STR);
     $stmt->bindParam(':urlImagen', $urlImagen, PDO::PARAM_STR);
-
     $stmt->execute();
 
     // $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);

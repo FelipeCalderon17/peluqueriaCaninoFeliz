@@ -52,27 +52,30 @@ if ((isset($_SESSION['login']) && $_SESSION['rol_usuario'] == 'administrador')) 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <?php if ($_SESSION['rol_usuario'] == 'administrador') { ?>
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                             <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
-                            <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
+                            <li class="nav-item active"><a href="empleados.php" class="nav-link">Empleados</a></li>
                             <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
                             <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
+                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                     <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                             <li class="nav-item "><a href="productosClientes.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                     <?php if ($_SESSION['rol_usuario'] == 'empleado') { ?>
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a href="inicio.php" class="nav-link">Inicio</a></li>
+                            <li class="nav-item "><a href="inicio.php" class="nav-link">Inicio</a></li>
                             <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                             <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                 </div>

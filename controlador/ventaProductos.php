@@ -24,7 +24,7 @@ if (
         $_SESSION['compra'] = 'OK';
         try {
             // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-            $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
 
             // Configurar el manejo de errores y excepciones.
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -83,8 +83,8 @@ if (
 
 
 
-
-            $sqlTablaHasProductos = ("INSERT INTO producto_has_venta(producto_id_producto,Venta_id_venta,cantidad_producto,fecha) VALUES (:idProducto,:idventa,:cantidadComprar,:fechahoy)");
+            $sqlTablaHasProductos = ("INSERT INTO producto_has_venta(producto_id_producto,Venta_id_venta,cantidad_producto,fecha,id_usuario_fk) VALUES (:idProducto,:idventa,:cantidadComprar,:fechahoy,:id)");
+            echo $id;
             $stmt5 = $pdo->prepare($sqlTablaHasProductos);
             $stmt5->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
             // echo $idProducto;
@@ -92,6 +92,7 @@ if (
             $stmt5->bindParam(':cantidadComprar', $cantidadComprar, PDO::PARAM_STR);
             //echo $cantidadComprar;
             $stmt5->bindParam(':fechahoy', $fechahoy, PDO::PARAM_STR);
+            $stmt5->bindParam(':id', $id, PDO::PARAM_STR);
             $stmt5->execute();
 
 
