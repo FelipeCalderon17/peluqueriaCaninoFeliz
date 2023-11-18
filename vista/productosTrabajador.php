@@ -211,7 +211,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="../controlador/agregarProducto.php" method="post">
+                                <form action="../controlador/agregarProducto.php" method="post" onsubmit="return validarFormulario()">
                                     <!-- <input name="id" value="" type="hiddennn"> -->
 
                                     <div class="mb-3">
@@ -224,7 +224,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Estado Producto</label>
-                                        <select class=" form-select w-100" aria-label="Default select example" name="estadoProducto">
+                                        <select class=" form-select w-100" aria-label="Default select example" name="estadoProducto" id="estadoProducto">
                                             <option value="Activo">Activo</option>
                                             <option value="Inactivo">Inactivo</option>
 
@@ -330,7 +330,7 @@
                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Producto</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form method="post" action="../controlador/editarProducto.php">
+                                            <form method="post" action="../controlador/editarProducto.php" onsubmit="return validarFormulario()">
                                                 <div class="modal-body">
                                                     <input type="text" class="form-control" id="id_usuario" name="id_producto" aria-describedby="emailHelp" value="<?php echo $fila['id_producto'] ?>" hidden>
 
@@ -478,7 +478,32 @@
     <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+    <script>
+        function validarFormulario() {
+            // Get the values of the form fields
+            var nombreProducto = document.getElementById('nombreProducto').value;
+            var urlImagen = document.getElementById('urlImagen').value;
+            var estadoProducto = document.getElementById('estadoProducto').value;
+            var tipoProducto = document.getElementById('tipoProducto').value;
+            var existenciaProducto = document.getElementById('existenciaProducto').value;
+            var descripcionProducto = document.getElementById('descripcionProducto').value;
+            var precioProducto = document.getElementById('precioProducto').value;
 
+            // Check if any of the fields are empty
+            if (nombreProducto.trim() === '' || urlImagen.trim() === '' || estadoProducto.trim() === '' || tipoProducto.trim() === '' || existenciaProducto.trim() === '' || descripcionProducto.trim() === '' || precioProducto.trim() === '') {
+                // Show SweetAlert for incomplete data
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Datos Vacios',
+                    text: 'Por favor, completa todos los campos.',
+                });
+                return false; // Prevent the form from being submitted
+            }
+
+
+            return true;
+        }
+    </script>
 
 </body>
 
