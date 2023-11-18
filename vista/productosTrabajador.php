@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Precio</label>
-                                        <input type="text" class="form-control" min="1" id="precioProducto" name="precioProducto">
+                                        <input type="number" class="form-control" min="1" id="precioProducto" name="precioProducto">
                                     </div>
 
                                     <div class="modal-footer">
@@ -364,7 +364,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Precio Producto</label>
-                                                        <input type="text" class="form-control" min="1" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
+                                                        <input type="number" class="form-control" min="1" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto'] ?>" class="btn btn-primary">Enviar</button>
