@@ -249,13 +249,15 @@
                     <table class="table table-striped table-hover border">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Id producto</th>
                                 <th scope="col">Cantidad</th>
-                                <th scope="col">Nommbre Producto</th>
-                                <th scope="col">Nommbre Usuario</th>
+                                <th scope="col">Nombre Producto</th>
+                                <th scope="col">Nombre Usuario</th>
                                 <th scope="col">fecha</th>
+                                <th scope="col">Total a pagar</th>
 
-                                <th scope="col" class="text-center">Editar</th>
+
+                                <!-- <th scope="col" class="text-center">Editar</th> -->
                             </tr>
                         </thead>
                         <tbody><?php
@@ -269,9 +271,20 @@
                                     $id_usuario =  $_SESSION['idUsuario'];
                                     // Paso 2: Preparar una consulta SQL usando consultas preparadas.
 
-                                    $stmt2 = $pdo2->prepare("SELECT usuario.nombre_usuario, producto.nombre_producto,producto_has_venta.producto_id_producto,producto_has_venta.cantidad_producto,producto_has_venta.fecha FROM producto
+                                    $stmt2 = $pdo2->prepare("SELECT usuario.nombre_usuario, producto.nombre_producto,producto.id_producto,producto_has_venta.producto_id_producto,producto_has_venta.cantidad_producto,producto_has_venta.fecha, producto.precio_producto*producto_has_venta.cantidad_producto AS total  FROM producto
                                     INNER JOIN producto_has_venta ON producto.id_producto = producto_has_venta.producto_id_producto
                                     INNER JOIN usuario ON usuario.id_usuario = producto_has_venta.id_usuario_fk where producto_has_venta.id_usuario_fk=id_usuario");
+
+
+                                    // $consulta = "SELECT precio_producto from producto WHERE id_producto = $idProducto";
+                                    // $stmt3 = $pdo->prepare($consulta);
+                                    // $stmt3->execute();
+                                    // // Captura los datos de la consulta, captura una sola fila
+                                    // $fila = $stmt3->fetch(PDO::FETCH_ASSOC);
+                                    // $precioProducto = $fila['precio_producto'];
+                                    // $cantidadComprar = $_POST['cantidadComprar'];
+                                    // $totalVenta = $cantidadComprar * $precioProducto;
+
 
 
                                     // Paso 4: Ejecutar la consulta preparada.
@@ -279,18 +292,20 @@
 
                                     // Paso 5: Recuperar resultados.
                                     while ($fila = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+
                                 ?>
                                     <tr>
-                                        <th scope="row"><?php echo $_SESSION['idUsuario'] ?></th>
+                                        <td><?php echo $fila['id_producto'] ?></td>
                                         <td><?php echo $fila['cantidad_producto'] ?></td>
                                         <td><?php echo $fila['nombre_producto'] ?></td>
                                         <td><?php echo $fila['nombre_usuario'] ?></td>
                                         <td><?php echo $fila['fecha'] ?></td>
+                                        <td><?php echo $fila['total'] ?></td>
 
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCliente<?php echo $_SESSION['idUsuario'] ?> ">
+                                        <!-- <td class="text-center">
+                                            <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCliente ">
                                             </button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                     <div class="modal fade" id="editarCliente<?php echo $fila['id_usuario'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
