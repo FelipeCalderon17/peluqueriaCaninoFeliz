@@ -55,6 +55,7 @@ if($_SESSION['login']){
     <?php
   
     if(!empty($Exito) && $Exito == 'OK'){
+
       ?>   <script>
                     Swal.fire({
                         icon: 'success',
@@ -419,26 +420,29 @@ if($_SESSION['login']){
             </svg></div>
 
 
-<?php
-if (isset($error)) {
-    echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '$error',
-        });
-    </script>";
-}
-?>
 
 
-<script>
+
+            <script>
     function validarFormulario() {
-        // Obtener el valor del campo de correo electrónico
-        var correo = document.getElementById('EmailValida').value;
+        // Get the values of the form fields
+        var nombreEmpleado = document.getElementById('exampleInputEmail1').value;
+        var correoEmpleado = document.getElementById('EmailValida').value;
+        var contraseña = document.getElementById('exampleInputPassword1').value;
+
+        // Check if any of the fields are empty
+        if (nombreEmpleado.trim() === '' || correoEmpleado.trim() === '' || contraseña.trim() === '') {
+            // Show SweetAlert for incomplete data
+            Swal.fire({
+                icon: 'error',
+                title: 'Datos incompletos',
+                text: 'Por favor, completa todos los campos.',
+            });
+            return false; // Prevent the form from being submitted
+        }
 
         // Validar el formato del correo electrónico
-        if (!/^.+@.+\..+$/.test(correo)) {
+        if (!/^.+@.+\..+$/.test(correoEmpleado)) {
             // Mostrar SweetAlert para correo inválido
             Swal.fire({
                 icon: 'error',
@@ -451,7 +455,8 @@ if (isset($error)) {
         // Continuar con el envío del formulario si la validación es exitosa
         return true;
     }
-</script> 
+</script>
+
 
 
 
