@@ -19,6 +19,12 @@ if ($_SESSION['login']) {
     if (isset($_SESSION['errorFechaAnterior'])) {
         $errorFechaAnterior = $_SESSION['errorFechaAnterior'];
     }
+    if (isset($_SESSION['eliminarCita'])) {
+        $eliminar = $_SESSION['eliminarCita'];
+    }
+    if (isset($_SESSION['errorEliminar'])) {
+        $eliminarError = $_SESSION['errorEliminar'];
+    }
     try {
         //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
         $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
@@ -36,7 +42,7 @@ if ($_SESSION['login']) {
     $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta preparada para evitar inyección de SQL
-    $sql2 = "SELECT cita.fecha_cita, cita.id_cita,mascota.nombre_mascota FROM cita inner join mascota on id_mascota = mascota_id_mascota inner join usuario on usuario_id_usuario = usuario.id_usuario WHERE usuario.id_usuario = :idUsuario ";
+    $sql2 = "SELECT cita.fecha_cita, cita.id_cita,mascota.nombre_mascota FROM cita inner join mascota on id_mascota = mascota_id_mascota inner join usuario on usuario_id_usuario = usuario.id_usuario WHERE usuario.id_usuario = :idUsuario AND cita.estado='Activo'";
     $stmt2 = $pdo->prepare($sql2);
     $stmt2->bindParam(':idUsuario', $idUsuario, PDO::PARAM_STR);
     $stmt2->execute();
@@ -93,7 +99,7 @@ if ($_SESSION['login']) {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Error editando la cita",
+                    text: "Error editando la cita, revisa los datos",
                 });
             </script> <?php
                         unset($_SESSION['errorEditar']);
@@ -124,6 +130,18 @@ if ($_SESSION['login']) {
                     }
                         ?>
         <?php
+        if (!empty($eliminar) && $eliminar == 'OK') {
+        ?><script>
+                Swal.fire({
+                    title: "Buen Trabajo!",
+                    text: "Cita eliminada correctamente",
+                    icon: "success"
+                });
+            </script> <?php
+                        unset($_SESSION['eliminarCita']);
+                    }
+                        ?>
+        <?php
         if (!empty($errorFechaCogida) && $errorFechaCogida == 'ERROR') {
         ?><script>
                 Swal.fire({
@@ -147,8 +165,21 @@ if ($_SESSION['login']) {
                         unset($_SESSION['errorFechaAnterior']);
                     }
                         ?>
+        <?php
+        if (!empty($eliminarError) && $eliminarError == 'OK') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Error eliminando la cita",
+                });
+            </script> <?php
+                        unset($_SESSION['errorEliminar']);
+                    }
+                        ?>
+
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="inicio.html"><span class="flaticon-pawprint-1 mr-2"></span>Canino
                     Feliz</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,9 +192,7 @@ if ($_SESSION['login']) {
                             <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                             <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
-                            <li class="nav-item active"><a href="citasyServicios.php" class="nav-link">Citas</a></li>
                             <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
-                            <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                     <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -184,6 +213,15 @@ if ($_SESSION['login']) {
                         </ul>
                     <?php } ?>
                 </div>
+                <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i>
+                            <?php echo $_SESSION["nombreUsuario"] ?> </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../controlador/cerrarSesion.php">Cerrar Sesión </a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </nav>
         <!-- END nav -->
@@ -262,6 +300,7 @@ if ($_SESSION['login']) {
                                                 <th scope="col">Mascota</th>
                                                 <th scope="col">Servicios</th>
                                                 <th scope="col" class="text-center">Editar</th>
+                                                <th scope="col" class="text-center">Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -292,6 +331,10 @@ if ($_SESSION['login']) {
                                                     </td>
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCita<?php echo $cita['id_cita'] ?>">
+                                                        </button>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-danger bi bi-trash" data-bs-toggle="modal" data-bs-target="#eliminarCita<?php echo $cita['id_cita'] ?>">
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -339,6 +382,22 @@ if ($_SESSION['login']) {
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="submit" class="btn btn-primary">Enviar</button>
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="eliminarCita<?php echo $cita['id_cita'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Desea eliminar la cita?</h1>
+                                                            </div>
+                                                            <form method="post" action="../controlador/eliminarCita.php">
+                                                                <div class="modal-footer">
+                                                                    <input type="text" class="form-control" name="idCitaEliminar" aria-describedby="emailHelp" value="<?php echo $cita['id_cita'] ?>" hidden>
+                                                                    <button type="submit" class="btn btn-primary">Confirmar</button>
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                                                 </div>
                                                             </form>

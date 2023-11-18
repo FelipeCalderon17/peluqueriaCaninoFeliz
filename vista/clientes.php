@@ -1,4 +1,21 @@
-<?php session_start() ?>
+<?php session_start();
+if (isset($_SESSION['errorCorreoCliente'])) {
+    $error = $_SESSION['errorCorreoCliente'];
+}
+if (isset($_SESSION['errorDatosClientes'])) {
+    $errorDatos = $_SESSION['errorDatosClientes'];
+}
+if (isset($_SESSION['errorEditar'])) {
+    $errorEditar = $_SESSION['errorEditar'];
+}
+if (isset($_SESSION['exitoAgregar'])) {
+    $exito = $_SESSION['exitoAgregar'];
+}
+if (isset($_SESSION['exitoEditar'])) {
+    $exitoEditar = $_SESSION['exitoEditar'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +29,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="css/animate.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
@@ -26,10 +43,69 @@
 </head>
 
 <body>
-
+    <?php
+    if (!empty($error) && $error == 'OK') {
+    ?><script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El correo ya esta en uso",
+            });
+        </script> <?php
+                    unset($_SESSION['errorCorreoCliente']);
+                }
+                    ?>
+    <?php
+    if (!empty($errorEditar) && $errorEditar == 'OK') {
+    ?><script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Revisa los datos",
+            });
+        </script> <?php
+                    unset($_SESSION['errorEditar']);
+                }
+                    ?>
+    <?php
+    if (!empty($errorDatos) && $errorDatos == 'OK') {
+    ?><script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Datos Incompletos",
+            });
+        </script> <?php
+                    unset($_SESSION['errorDatosClientes']);
+                }
+                    ?>
+    <?php
+    if (!empty($exito) && $exito == 'OK') {
+    ?><script>
+            Swal.fire({
+                title: "Buen Trabajo!",
+                text: "Cliente agregado exitosamente",
+                icon: "success"
+            });
+        </script> <?php
+                    unset($_SESSION['exitoAgregar']);
+                }
+                    ?>
+    <?php
+    if (!empty($exitoEditar) && $exitoEditar == 'OK') {
+    ?><script>
+            Swal.fire({
+                title: "Buen Trabajo!",
+                text: "Cliente editado exitosamente",
+                icon: "success"
+            });
+        </script> <?php
+                    unset($_SESSION['exitoEditar']);
+                }
+                    ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="inicio.php"><span class="flaticon-pawprint-1 mr-2"></span>Canino
                 Feliz</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,9 +118,7 @@
                         <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                         <li class="nav-item active"><a href="clientes.php" class="nav-link">Clientes</a></li>
                         <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
-                        <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
                         <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
-                        <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
                     </ul>
                 <?php } ?>
                 <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -65,6 +139,15 @@
                     </ul>
                 <?php } ?>
             </div>
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i>
+                        <?php echo $_SESSION["nombreUsuario"] ?> </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../controlador/cerrarSesion.php">Cerrar Sesión </a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
     <!-- END nav -->
@@ -145,7 +228,8 @@
                                     <tbody><?php
                                             try {
                                                 // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-                                                $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+                                                //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+                                                $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
 
                                                 // Configurar el manejo de errores y excepciones.
                                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -185,7 +269,7 @@
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Correo</label>
-                                                                        <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                                                        <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>" readonly>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputPassword1" class="form-label">Contraseña</label>

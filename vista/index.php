@@ -1,5 +1,14 @@
 <?php session_start();
 error_reporting(0);
+if (isset($_SESSION['errorCorreo'])) {
+    $error = $_SESSION['errorCorreo'];
+}
+if (isset($_SESSION['errorRegistro'])) {
+    $errorDatos = $_SESSION['errorRegistro'];
+}
+if (isset($_SESSION['exito'])) {
+    $exito = $_SESSION['exito'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +24,7 @@ error_reporting(0);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="css/animate.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
@@ -30,6 +39,42 @@ error_reporting(0);
 </head>
 
 <body>
+    <?php
+    if (!empty($error) && $error == 'OK') {
+    ?><script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El correo ya esta en uso",
+            });
+        </script> <?php
+                    unset($_SESSION['errorCorreo']);
+                }
+                    ?>
+    <?php
+    if (!empty($errorDatos) && $errorDatos == 'OK') {
+    ?><script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Datos Incompletos",
+            });
+        </script> <?php
+                    unset($_SESSION['errorRegistro']);
+                }
+                    ?>
+    <?php
+    if (!empty($exito) && $exito == 'OK') {
+    ?><script>
+            Swal.fire({
+                title: "Buen Trabajo!",
+                text: "Te has registrado exitosamente",
+                icon: "success"
+            });
+        </script> <?php
+                    unset($_SESSION['exito']);
+                }
+                    ?>
     <section class="vh-100" style="background-image: url('images/bg_1.jpg');">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">

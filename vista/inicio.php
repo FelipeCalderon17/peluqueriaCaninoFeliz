@@ -48,9 +48,7 @@ if ($_SESSION['login']) {
 							<li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
 							<li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
 							<li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
-							<li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
 							<li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
-							<li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
 						</ul>
 					<?php } ?>
 					<?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>

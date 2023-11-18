@@ -1,11 +1,5 @@
 <?php
-//Controla el inicio de sesión
-/* echo $_POST['nombre_mascota'];
-echo $_POST['tipo_mascota'];
-echo $_POST['raza'];
-echo $_POST['requisitos_especiales'];
-echo $_POST['usuario_id_usuario']; */
-//Se verifica que existan datos en el formulario
+session_start();
 if (
     isset($_POST['nombre_mascota']) && !empty($_POST['nombre_mascota']) &&
     isset($_POST['tipo_mascota']) && !empty($_POST['tipo_mascota']) &&
@@ -39,7 +33,7 @@ if (
 
         // Paso 4: Ejecutar la consulta preparada.
         $stmt->execute();
-
+        $_SESSION['exito'] = "OK";
         header("Location: ../vista/mascota.php");
 
         // Paso 6: Cerrar la conexión a la base de datos.
@@ -48,4 +42,7 @@ if (
         // Manejo de errores en caso de que ocurra una excepción.
         echo "Error: " . $e->getMessage();
     }
+} else {
+    $_SESSION['errorMascota'] = "OK";
+    header("Location: ../vista/mascota.php");
 }

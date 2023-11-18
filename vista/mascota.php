@@ -1,6 +1,18 @@
 <?php session_start();
 //require_once '../modelo/MySQL.php';
 if ($_SESSION['login']) {
+    if (isset($_SESSION['errorMascota'])) {
+        $error = $_SESSION['errorMascota'];
+    }
+    if (isset($_SESSION['exito'])) {
+        $exito = $_SESSION['exito'];
+    }
+    if (isset($_SESSION['errorEditar'])) {
+        $errorEditar = $_SESSION['errorEditar'];
+    }
+    if (isset($_SESSION['exitoEditar'])) {
+        $exitoEditar = $_SESSION['exitoEditar'];
+    }
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -15,7 +27,7 @@ if ($_SESSION['login']) {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="css/animate.css">
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <link rel="stylesheet" href="css/magnific-popup.css">
@@ -29,7 +41,54 @@ if ($_SESSION['login']) {
     </head>
 
     <body>
-
+        <?php
+        if (!empty($error) && $error == 'OK') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Datos incompletos",
+                });
+            </script> <?php
+                        unset($_SESSION['errorMascota']);
+                    }
+                        ?>
+        <?php
+        if (!empty($errorEditar) && $errorEditar == 'OK') {
+        ?><script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Datos incompletos",
+                });
+            </script> <?php
+                        unset($_SESSION['errorEditar']);
+                    }
+                        ?>
+        <?php
+        if (!empty($exito) && $exito == 'OK') {
+        ?><script>
+                Swal.fire({
+                    title: "Buen Trabajo!",
+                    text: "Agregado Correctamente",
+                    icon: "success"
+                });
+            </script> <?php
+                        unset($_SESSION['exito']);
+                    }
+                        ?>
+        <?php
+        if (!empty($exitoEditar) && $exitoEditar == 'OK') {
+        ?><script>
+                Swal.fire({
+                    title: "Buen Trabajo!",
+                    text: "Editado Correctamente",
+                    icon: "success"
+                });
+            </script> <?php
+                        unset($_SESSION['exitoEditar']);
+                    }
+                        ?>
 
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container-fluid">
@@ -46,9 +105,7 @@ if ($_SESSION['login']) {
                             <li class="nav-item "><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                             <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                             <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
-                            <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
                             <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
-                            <li class="nav-item active"><a href="mascota.php" class="nav-link">Mascotas</a></li>
                         </ul>
                     <?php } ?>
                     <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>

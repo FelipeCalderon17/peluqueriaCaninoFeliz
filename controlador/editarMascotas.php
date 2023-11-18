@@ -1,11 +1,5 @@
 <?php
-//Controla el inicio de sesión
-/* echo $_POST['nombre_mascota'];
-echo $_POST['tipo_mascota'];
-echo $_POST['raza'];
-echo $_POST['requisitos_especiales'];
-echo $_POST['usuario_id_usuario']; */
-//Se verifica que existan datos en el formulario
+session_start();
 if (
     isset($_POST['id_mascotaEdit']) && !empty($_POST['id_mascotaEdit']) &&
     isset($_POST['nombre_mascotaEdit']) && !empty($_POST['nombre_mascotaEdit']) &&
@@ -19,8 +13,8 @@ if (
     try {
         require_once '../modelo/mycript.php';
         // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
-        $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
-
+        //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
 
         // Configurar el manejo de errores y excepciones.
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -45,7 +39,7 @@ if (
 
         // Paso 4: Ejecutar la consulta preparada.
         $stmt->execute();
-
+        $_SESSION['exitoEditar'] = "OK";
         header("Location: ../vista/mascota.php");
 
         // Paso 6: Cerrar la conexión a la base de datos.
@@ -54,4 +48,7 @@ if (
         // Manejo de errores en caso de que ocurra una excepción.
         echo "Error: " . $e->getMessage();
     }
+} else {
+    $_SESSION['errorEditar'] = "OK";
+    header("Location: ../vista/mascota.php");
 }
