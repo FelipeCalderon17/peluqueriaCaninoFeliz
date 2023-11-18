@@ -93,9 +93,9 @@
                         <li class="nav-item active"><a href="productosTrabajador.php" class="nav-link">Productos</a></li>
                         <li class="nav-item "><a href="clientes.php" class="nav-link">Clientes</a></li>
                         <li class="nav-item "><a href="empleados.php" class="nav-link">Empleados</a></li>
-                        <li class="nav-item "><a href="citasyServicios.php" class="nav-link">Citas</a></li>
+
                         <li class="nav-item "><a href="estadisticas.php" class="nav-link">Estadisticas</a></li>
-                        <li class="nav-item "><a href="mascota.php" class="nav-link">Mascotas</a></li>
+
                     </ul>
                 <?php } ?>
                 <?php if ($_SESSION['rol_usuario'] == 'cliente') { ?>
@@ -252,6 +252,9 @@
                         </thead>
                         <tbody><?php
                                 try {
+
+
+
                                     // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
                                     $pdo2 = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
                                     // Configurar el manejo de errores y excepciones.
@@ -263,7 +266,7 @@
 
                                     $stmt2 = $pdo2->prepare("SELECT usuario.nombre_usuario, producto.nombre_producto,producto.id_producto,producto_has_venta.producto_id_producto,producto_has_venta.cantidad_producto,producto_has_venta.fecha, producto.precio_producto*producto_has_venta.cantidad_producto AS total  FROM producto
                                     INNER JOIN producto_has_venta ON producto.id_producto = producto_has_venta.producto_id_producto
-                                    INNER JOIN usuario ON usuario.id_usuario = producto_has_venta.id_usuario_fk where producto_has_venta.id_usuario_fk=id_usuario");
+                                    INNER JOIN usuario ON usuario.id_usuario = producto_has_venta.id_usuario_fk where producto_has_venta.id_usuario_fk=:id_usuario");
 
 
                                     // $consulta = "SELECT precio_producto from producto WHERE id_producto = $idProducto";
@@ -276,6 +279,7 @@
                                     // $totalVenta = $cantidadComprar * $precioProducto;
 
 
+                                    $stmt2->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
 
                                     // Paso 4: Ejecutar la consulta preparada.
                                     $stmt2->execute();
