@@ -105,17 +105,7 @@
         </div>
     </nav>
     <!-- END nav -->
-    <div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
-                <div class="col-md-11 ftco-animate text-center">
-                    <h1 class="mb-4">¿Quieres que tu mascota tenga una buena experiencia?</h1>
-                    <p><a href="#" class="btn btn-primary mr-md-4 py-3 px-4">Conocer mas <span class="ion-ios-arrow-forward"></span></a></p>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
@@ -245,6 +235,7 @@
                                 </div>
 
 
+
                                 <div class="modal fade" id="editarProducto<?php echo $fila['id_producto'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -288,16 +279,6 @@
                                                         <label for="exampleInputEmail1" class="form-label">Precio Producto</label>
                                                         <input type="text" class="form-control" min="1" id="precio_producto" name="precio_producto" aria-describedby="emailHelp" value="<?php echo $fila['precio_producto'] ?>">
                                                     </div>
-
-
-
-
-
-
-
-
-
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" value="s" id="actualizarSweet<?php echo $fila['id_producto'] ?>" class="btn btn-primary">Enviar</button>
@@ -310,6 +291,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <script>
                                 document.getElementById('actualizarSweet<?php echo $fila['id_producto'] ?>').addEventListener('click', function() {
 
@@ -329,7 +311,116 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-striped table-hover border">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre Cliente</th>
+                                <th scope="col">Cantidad</th>
+
+                                <th scope="col" class="text-center">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody><?php
+                                try {
+                                    // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                                    $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+                                    // Configurar el manejo de errores y excepciones.
+                                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+                                    $stmt = $pdo->prepare("SELECT * FROM usuario where rol_usuario = 'cliente'");
+
+                                    // Paso 4: Ejecutar la consulta preparada.
+                                    $stmt->execute();
+
+                                    // Paso 5: Recuperar resultados.
+                                    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $fila['id_usuario'] ?></th>
+                                        <td><?php echo $fila['nombre_usuario'] ?></td>
+                                        <td><?php echo $fila['correo_usuario'] ?></td>
+
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCliente<?php echo $fila['id_usuario'] ?> ">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="editarCliente<?php echo $fila['id_usuario'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar cliente</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form method="post" action="../controlador/editarCliente.php">
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                                            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp" value="<?php echo $fila['nombre_usuario'] ?>">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Correo</label>
+                                                            <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                                            <input type="password" class="form-control" id="pass_usuario" name="pass_usuario" value="<?php
+                                                                                                                                                        require_once '../modelo/mycript.php';
+                                                                                                                                                        echo decrypt($fila['pass_usuario']) ?>">
+                                                        </div>
+                                                        <!-- <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Select</label>
+                                    <select class="form-control form-select w-100" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div> -->
+
+
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <?php
+                                        /* echo "idPelicula: " . $fila['idPelicula'] . ", nombrePelicula: " . $fila['nombrePelicula'] . ", fecha: " . $fila['fecha'] . "<br>"; */
+                                    }
+
+                                    // Paso 6: Cerrar la conexión a la base de datos.
+                                    $pdo = null;
+                                } catch (PDOException $e) {
+                                    // Manejo de errores en caso de que ocurra una excepción.
+                                    echo "Error: " . $e->getMessage();
+                                }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </section>
+
 
     <footer class="footer">
         <div class="container">

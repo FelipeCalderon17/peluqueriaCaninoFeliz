@@ -243,6 +243,111 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-striped table-hover border">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Nommbre Producto</th>
+                                <th scope="col">Nommbre Usuario</th>
+                                <th scope="col">fecha</th>
+
+                                <th scope="col" class="text-center">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody><?php
+                                try {
+                                    // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
+                                    $pdo2 = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+                                    // Configurar el manejo de errores y excepciones.
+                                    $pdo2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $_SESSION['idUsuario'];
+                                    $id_usuario =  $_SESSION['idUsuario'];
+                                    // Paso 2: Preparar una consulta SQL usando consultas preparadas.
+
+                                    $stmt2 = $pdo2->prepare("SELECT usuario.nombre_usuario, producto.nombre_producto,producto_has_venta.producto_id_producto,producto_has_venta.cantidad_producto,producto_has_venta.fecha FROM producto
+                                    INNER JOIN producto_has_venta ON producto.id_producto = producto_has_venta.producto_id_producto
+                                    INNER JOIN usuario ON usuario.id_usuario = producto_has_venta.id_usuario_fk where producto_has_venta.id_usuario_fk=id_usuario");
+
+
+                                    // Paso 4: Ejecutar la consulta preparada.
+                                    $stmt2->execute();
+
+                                    // Paso 5: Recuperar resultados.
+                                    while ($fila = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                                ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $_SESSION['idUsuario'] ?></th>
+                                        <td><?php echo $fila['cantidad_producto'] ?></td>
+                                        <td><?php echo $fila['nombre_producto'] ?></td>
+                                        <td><?php echo $fila['nombre_usuario'] ?></td>
+                                        <td><?php echo $fila['fecha'] ?></td>
+
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editarCliente<?php echo $_SESSION['idUsuario'] ?> ">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="editarCliente<?php echo $fila['id_usuario'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar cliente</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form method="post" action="../controlador/editarCliente.php">
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                                            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" aria-describedby="emailHelp" value="<?php echo $fila['nombre_usuario'] ?>">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Correo</label>
+                                                            <input type="email" class="form-control" id="correo_usuario" name="correo_usuario" aria-describedby="emailHelp" value="<?php echo $fila['correo_usuario'] ?>">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                                            <input type="password" class="form-control" id="pass_usuario" name="pass_usuario" value="<?php
+                                                                                                                                                        require_once '../modelo/mycript.php';
+                                                                                                                                                        echo decrypt($fila['pass_usuario']) ?>">
+                                                        </div>
+
+
+
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <?php
+
+                                    }
+
+                                    // Paso 6: Cerrar la conexión a la base de datos.
+                                    $pdo = null;
+                                } catch (PDOException $e) {
+                                    // Manejo de errores en caso de que ocurra una excepción.
+                                    echo "Error: " . $e->getMessage();
+                                }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </section>
 
 
