@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if (
+    isset($_POST['id_usuario']) && !empty($_POST['id_usuario']) &&
+    isset($_POST['nombreEmpleado']) && !empty($_POST['nombreEmpleado']) &&
+    isset($_POST['correoEmpleado']) && !empty($_POST['correoEmpleado']) &&
+    isset($_POST['contraseña']) && !empty($_POST['contraseña'])
+) {
+
 try {
     require_once '../modelo/mycript.php';
 
@@ -36,6 +45,7 @@ try {
     // Paso 4: Ejecutar la consulta preparada.
     $stmt->execute();
 
+    $_SESSION['EditadoExito']="OK";
     header("Location: ../vista/empleados.php");
 
     // Paso 6: Cerrar la conexión a la base de datos.
@@ -44,3 +54,11 @@ try {
     // Manejo de errores en caso de que ocurra una excepción.
     echo "Error: " . $e->getMessage();
 }
+
+}
+else {
+    $_SESSION['errorEditado'] = "OK";
+    header("Location: ../vista/empleados.php");
+}
+
+?>

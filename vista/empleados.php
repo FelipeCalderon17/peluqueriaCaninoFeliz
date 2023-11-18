@@ -1,13 +1,21 @@
 <?php
 
 session_start();
+
 if($_SESSION['login']){
    if(isset($_SESSION['registroExito'])){
     $Exito = $_SESSION['registroExito'];
    } 
+   }
    if(isset($_SESSION['erroRegistro'])){
     $Error = $_SESSION['erroRegistro'];
    }
+   if(isset($_SESSION['EditadoExito'])){
+    $Editado = $_SESSION['EditadoExito'];
+   } 
+   if(isset($_SESSION['errorEditado'])){
+    $ErrorEdit = $_SESSION['errorEditado'];
+   
 }
 
 
@@ -53,37 +61,63 @@ if($_SESSION['login']){
     <body>
 
     <?php
-  
-    if(!empty($Exito) && $Exito == 'OK'){
+if (!empty($Exito) && $Exito == 'OK') {
+    ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Inserción exitosa.',
+        });
+    </script>
+    <?php
+    unset($_SESSION['registroExito']);
+}
+?>
 
-      ?>   <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: 'Inserción exitosa.',
-                    });
-            </script>;
-    
-    <?php
-        unset($_SESSION['registroExito']);
-}  
+<?php
+if (!empty($Editado) && $Editado == 'OK') {
     ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Correcto',
+            text: 'Edición exitosa.',
+        });
+    </script>
     <?php
-  
-    if(!empty($Error) && $Error == 'errorCreado'){
-      ?>   <script>
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Error',
-                        text: 'El correo ya se encuentra en uso',
-                    });
-            </script>;
-    
-    <?php
-        unset($_SESSION['erroRegistro']);
-}  
+    unset($_SESSION['EditadoExito']);
+}
+?>
+
+<?php
+if (!empty($Error) && $Error == 'errorCreado') {
     ?>
-   
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Error',
+            text: 'El correo ya se encuentra en uso',
+        });
+    </script>
+    <?php
+    unset($_SESSION['erroRegistro']);
+}
+?>
+<?php
+if (!empty($ErrorEdit) && $ErrorEdit == 'OK') {
+    ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Datos incompletos',
+            text: 'Por favor, completa todos los campos.',
+        });
+    </script>
+    <?php
+    unset($_SESSION['errorEditado']);
+}
+?>
 
 
         <!-- INICIO nav -->
@@ -236,7 +270,7 @@ if($_SESSION['login']){
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Paso 2: Preparar una consulta SQL usando consultas preparadas.
-                    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE rol_usuario = 'Empleado'");
+                    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE rol_usuario = 'empleado'");
 
                     // Paso 4: Ejecutar la consulta preparada.
                     $stmt->execute();
@@ -260,36 +294,26 @@ if($_SESSION['login']){
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Empleado</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Empleado</h1>
 
                                     </div>
-                                    <form method="post" action="../controlador/editarEmpleado.php">
+                                    <form method="post" action="../controlador/editarEmpleado.php" >
                                         <div class="modal-body">
 
                                             <input type="text" class="form-control" id="id_usuario" name="id_usuario" aria-describedby="emailHelp" value="<?php echo $fila['id_usuario'] ?>" hidden>
                                             <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">Nombre Empleado</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="" name="nombreEmpleado" value="<?php echo $fila['nombre_usuario'] ?>">
+                                                <label for="nombreEmpleadoEdit" class="form-label">Nombre Empleado</label>
+                                                <input type="text" class="form-control" id="nombreEmpleadoEdit" aria-describedby="" name="nombreEmpleado" value="<?php echo $fila['nombre_usuario'] ?>">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="correoEmpleado" value="<?php echo $fila['correo_usuario'] ?>">
+                                                <label for="EmailValidaEdit" class="form-label">Correo Electronico</label>
+                                                <input readonly type="email" class="form-control" id="EmailValidaEdit" aria-describedby="emailHelp" name="correoEmpleado" value="<?php echo $fila['correo_usuario'] ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" name="contraseña" value="<?php require_once '../modelo/mycript.php';
+                                                <input type="password" class="form-control" id="exampleInputPassword1Edit" name="contraseña" value="<?php require_once '../modelo/mycript.php';
                                                                                                                                                 echo decrypt($fila['pass_usuario']) ?>">
                                             </div>
-                                            <!-- <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Rol</label>
-                                    <select class="form-control form-select w-100" aria-label="Default select example" name="rol" value="<?php echo $fila['rol_usuario'] ?>">
-                                        <option selected disabled ></option>
-                                        <option>Empleado</option>
-                                    </select>
-                                </div> -->
-
-                                            <!--  <button type="submit" class="btn btn-primary">Submit</button> -->
-
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                 <button type="submit" class="btn btn-primary">Editar</button>
@@ -423,7 +447,7 @@ if($_SESSION['login']){
 
 
 
-            <script>
+<script>
     function validarFormulario() {
         // Get the values of the form fields
         var nombreEmpleado = document.getElementById('exampleInputEmail1').value;
@@ -454,8 +478,30 @@ if($_SESSION['login']){
 
         // Continuar con el envío del formulario si la validación es exitosa
         return true;
+    },
+
+/*     function validarFormularioEdit() {
+    // Obtener los valores de los campos del formulario
+    var nombreEmpleado = document.getElementById('nombreEmpleadoEdit').value;
+    var contraseña = document.getElementById('exampleInputPassword1Edit').value;
+
+    // Verificar si algún campo está en blanco
+    if (nombreEmpleado.trim() === '' || contraseña.trim() === '') {
+        // Mostrar SweetAlert para datos incompletos
+        Swal.fire({
+            icon: 'error',
+            title: 'Datos incompletos',
+            text: 'Por favor, completa todos los campos.',
+        });
+        return false; // Evitar que el formulario se envíe
     }
+
+    // Continuar con el envío del formulario si la validación es exitosa
+    return true;
+} */
+
 </script>
+
 
 
 
