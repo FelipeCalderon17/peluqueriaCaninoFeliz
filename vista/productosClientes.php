@@ -126,68 +126,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-3">
 
-                <!--  <h1>
-                    <button type="button" class="btn btn-primary mr-md-4 py-3 px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Registro de productos
-                    </button>
-                </h1> -->
-
-
-
-                <!-- Modal -->
-                <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Productos</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="../controlador/agregarProducto.php" method="post">
-                                    <input name="id" value="" type="hiddennn"> 
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Nombre de producto</label>
-                                        <input type="text" class="form-control" id="nombreProducto" name="nombreProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Existencias</label>
-                                        <input type="number" class="form-control" id="exampleInputPassword1" name="existenciaProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Tipo</label>
-                                        <input type="text" class="form-control" id="tipoProducto" name="tipoProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Descripcion</label>
-                                        <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Estado Producto</label>
-                                        <select class=" form-select w-100" aria-label="Default select example" name="estadoProducto">
-                                            <option value="Activo">Activo</option>
-                                            <option value="Inactivo">Inactivo</option>
-
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" value="Guardar" class="btn btn-primary">
-                                    </div>
-
-                                   
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
 
     <section id="productos" class="ftco-section ftco-no-pt ftco-no-pb">
         <div class="container-fluid">
@@ -198,7 +137,6 @@
                         <h2 class="mb-4 text-center">Productos</h2>
                     </div>
                     <div class="row">
-
 
                         <?php
                         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -221,6 +159,8 @@
 
                                     </div>
                                 </div>
+
+
                             </div>
 
                             <div class="modal fade" id="compra<?php echo $fila['id_producto'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -255,30 +195,17 @@
 
 
 
-                                            <!-- <script>
-                                            document.getElementById('comprar').addEventListener('click', function() {
-                                                Swal.fire({
-                                                    title: 'Compra Realizada con exito',
-                                                    showDenyButton: true,
-                                                    showCancelButton: true,
-                                                    confirmButtonText: 'confirmar',
-                                                    denyButtonText: `salir`,
-                                                }).then((result) => {
-                                                    /* Read more about isConfirmed, isDenied below */
-                                                    if (result.isConfirmed) {
-                                                        Swal.fire('Confirmado!', '', 'success')
-                                                    } else if (result.isDenied) {
-                                                        Swal.fire('Seguro deseas salir?', '', 'info')
-                                                    }
-                                                })
-                                            });
-                                        </script> -->
+
 
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
+
+
+
+
                         <?php
                         }
                         ?>
@@ -304,6 +231,8 @@
             </div>
         </div>
     </section>
+
+
 
     <footer class="footer">
         <div class="container">
