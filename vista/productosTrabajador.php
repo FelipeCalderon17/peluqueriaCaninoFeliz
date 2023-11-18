@@ -8,6 +8,9 @@
             if (isset($_SESSION['errorAgregar']) && !empty($_SESSION['errorAgregar'])) {
                 $errorAgregar = $_SESSION['errorAgregar'];
             }
+            if (isset($_SESSION['errorEditar']) && !empty($_SESSION['errorEditar'])) {
+                $errorEditar = $_SESSION['errorEditar'];
+            }
             try {
                 $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
             } catch (PDOException $e) {
@@ -94,6 +97,25 @@
         </script>
     <?php
                 unset($_SESSION['agregar']);
+            }
+    ?>
+
+
+    <?php
+            if (!empty($errorEditar) && $errorEditar == "EDITAR") {
+    ?>
+        <script>
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'no dejar campos vacios',
+                    text: 'Error al editar!',
+
+                })
+            };
+        </script>
+    <?php
+                unset($_SESSION['errorEditar']);
             }
     ?>
 
