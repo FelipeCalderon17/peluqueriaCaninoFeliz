@@ -18,7 +18,7 @@ if (
     isset($_POST['descripcionProducto']) && !empty($_POST['descripcionProducto']) &&
     isset($_POST['precioProducto']) && !empty($_POST['precioProducto'])
 ) {
-    sleep(2);
+    //sleep(2);
     $nombreProducto = $_POST['nombreProducto'];
     $urlImagen = $_POST['urlImagen'];
     $estadoProducto = $_POST['estadoProducto'];
