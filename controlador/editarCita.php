@@ -16,8 +16,8 @@ if (
     $lenghtServicios = count($servicios);
     if ($lenghtServicios > 0) {
         try {
-            //$pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
-            $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+            $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+            //$pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
         } catch (PDOException $e) {
             die("Error de conexión a la base de datos: " . $e->getMessage());
         }

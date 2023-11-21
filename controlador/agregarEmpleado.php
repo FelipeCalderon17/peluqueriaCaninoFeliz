@@ -9,7 +9,8 @@ if (
     require_once '../modelo/mycript.php';
 
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
+        $pdo = new PDO("mysql:host=localhost;dbname=id21435812_peluqueria_canino_feliz", "id21435812_calde17", "Bruno1702!");
+        //$pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $correo = $_POST['correoEmpleado'];
@@ -26,7 +27,7 @@ if (
             // El correo ya existe, muestra un mensaje de error con SweetAlert
             $_SESSION['erroRegistro'] = "errorCreado";
             header("Location: ../vista/empleados.php");
-           // echo $error;
+            // echo $error;
         } else {
             // El correo no existe, procede con la inserción
             $consultaAgregar = "INSERT INTO usuario(nombre_usuario, correo_usuario, pass_usuario, rol_usuario) VALUES (:nombreEmpleado, :correoEmpleado, :pass, :empleado)";
@@ -45,10 +46,8 @@ if (
 
             // Inserción exitosa, muestra un mensaje de éxito con SweetAlert y redirige a la página de empleados
 
-            $_SESSION['registroExito']="OK";
+            $_SESSION['registroExito'] = "OK";
             header("Location: ../vista/empleados.php");
-
-            
         }
 
         $pdo = null;
@@ -57,5 +56,3 @@ if (
         echo "Error: " . $e->getMessage();
     };
 }
-
-?>
