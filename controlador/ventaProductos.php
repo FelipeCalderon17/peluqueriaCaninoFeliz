@@ -20,7 +20,7 @@ if (
         //     header("Location: ../vista/productosClientes.php");
         // }
     } else {
-        sleep(2);
+        //sleep(2);
         $_SESSION['compra'] = 'OK';
         try {
             // Paso 1: Crear una instancia de la clase PDO y establecer una conexión a la base de datos.
@@ -54,9 +54,7 @@ if (
 
 
 
-            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $_SESSION["idUsuario"] = $fila['id_usuario'];
-            }
+            
             $id = $_SESSION["idUsuario"];
             //    echo $id;
 
@@ -84,7 +82,7 @@ if (
 
 
             $sqlTablaHasProductos = ("INSERT INTO producto_has_venta(producto_id_producto,Venta_id_venta,cantidad_producto,fecha,id_usuario_fk) VALUES (:idProducto,:idventa,:cantidadComprar,:fechahoy,:id)");
-            echo $id;
+           //echo $id;
             $stmt5 = $pdo->prepare($sqlTablaHasProductos);
             $stmt5->bindParam(':idProducto', $idProducto, PDO::PARAM_STR);
             // echo $idProducto;

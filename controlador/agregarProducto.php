@@ -1,5 +1,13 @@
 <?php
 session_start();
+$_POST['nombreProducto'] = trim($_POST['nombreProducto']);
+$_POST['urlImagen'] = trim($_POST['urlImagen']);
+
+$_POST['estadoProducto'] = trim($_POST['estadoProducto']);
+$_POST['tipoProducto'] = trim($_POST['tipoProducto']);
+$_POST['existenciaProducto'] = trim($_POST['existenciaProducto']);
+$_POST['descripcionProducto'] = trim($_POST['descripcionProducto']);
+$_POST['precioProducto'] = trim($_POST['precioProducto']);
 // Se hace el llamado del modelo de conexión y consultas
 if (
     isset($_POST['nombreProducto']) && !empty($_POST['nombreProducto']) &&
@@ -10,7 +18,7 @@ if (
     isset($_POST['descripcionProducto']) && !empty($_POST['descripcionProducto']) &&
     isset($_POST['precioProducto']) && !empty($_POST['precioProducto'])
 ) {
-    sleep(2);
+    //sleep(2);
     $nombreProducto = $_POST['nombreProducto'];
     $urlImagen = $_POST['urlImagen'];
     $estadoProducto = $_POST['estadoProducto'];
