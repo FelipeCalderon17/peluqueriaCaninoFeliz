@@ -54,9 +54,7 @@ if (
 
 
 
-            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $_SESSION["idUsuario"] = $fila['id_usuario'];
-            }
+            
             $id = $_SESSION["idUsuario"];
             //    echo $id;
 

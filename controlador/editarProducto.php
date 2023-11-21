@@ -1,5 +1,13 @@
 <?php
 session_start();
+$_POST['nombreProducto'] = trim($_POST['nombreProducto']);
+$_POST['urlImagen'] = trim($_POST['urlImagen']);
+$_POST['id_producto'] = trim($_POST['id_producto']);
+$_POST['estadoProducto'] = trim($_POST['estadoProducto']);
+$_POST['tipoProducto'] = trim($_POST['tipoProducto']);
+$_POST['existenciaProducto'] = trim($_POST['existenciaProducto']);
+$_POST['descripcionProducto'] = trim($_POST['descripcionProducto']);
+$_POST['precio_producto'] = trim($_POST['precio_producto']);
 if (
     isset($_POST['nombreProducto']) && !empty($_POST['nombreProducto']) &&
     isset($_POST['urlImagen']) && !empty($_POST['urlImagen']) &&
@@ -20,7 +28,7 @@ if (
     $precioProducto = $_POST['precio_producto'];
     $fechahoy = date('Y-m-d');
     try {
-        sleep(2);
+        // sleep(2);
         $pdo = new PDO("mysql:host=localhost;dbname=peluqueria_canino_feliz", "root", "");
     } catch (PDOException $e) {
         die("Error de conexión a la base de datos: " . $e->getMessage());

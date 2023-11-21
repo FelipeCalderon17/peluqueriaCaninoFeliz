@@ -330,7 +330,7 @@
                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Producto</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form method="post" action="../controlador/editarProducto.php" onsubmit="return validarFormulario()">
+                                            <form method="post" action="../controlador/editarProducto.php">
                                                 <div class="modal-body">
                                                     <input type="text" class="form-control" id="id_usuario" name="id_producto" aria-describedby="emailHelp" value="<?php echo $fila['id_producto'] ?>" hidden>
 
@@ -478,7 +478,7 @@
     <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <script>
+  <!--   <script>
         function validarFormulario() {
             // Get the values of the form fields
             var nombreProducto = document.getElementById('nombreProducto').value;
@@ -503,7 +503,7 @@
 
             return true;
         }
-    </script>
+    </script> -->
 
 </body>
 
